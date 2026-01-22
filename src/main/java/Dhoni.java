@@ -1,6 +1,8 @@
 import java.util.Scanner;
 
 public class Dhoni {
+    private static final int MAX = 100;
+
     private static void echo(String text) {
         String line = "-----------------------------------------";
         System.out.println("\t" + line);
@@ -9,6 +11,10 @@ public class Dhoni {
     }
 
     public static void main(String[] args) {
+
+        String[] tasks = new String[MAX];
+        int size = 0;
+
         String name = "Dhoni";
         String line = "-----------------------------------------";
         System.out.println("\t" + line);
@@ -20,15 +26,28 @@ public class Dhoni {
 
         String userInput = scanner.nextLine();
 
-        while (!userInput.equals("bye")) {
-            echo(userInput);
+        while (true) {
+            if (userInput.equals("bye")) {
+                echo("\t" + "Bye. Hope to see you again soon!");
+                break;
+            } else if (userInput.equals("list") && size != 0) {
+                StringBuilder sb = new StringBuilder();
+                sb.append((1)).append(". ").append(tasks[0]).append("\n");
+                for (int i = 1; i < size; i++) {
+                    sb.append("\t" ).append((i + 1)).append(". ").append(tasks[i]);
+                    if (i < size - 1) {
+                        sb.append("\n");
+                    }
+                }
+                echo(sb.toString());
+            } else {
+                echo(userInput);
+                tasks[size] = userInput;
+                size++;
+            }
             userInput = scanner.nextLine();
         }
         scanner.close();
-        System.out.println("\t" + line);
-        System.out.println("\t" + "Bye. Hope to see you again soon!");
-        System.out.println("\t" + line);
-
     }
 }
 
