@@ -4,6 +4,7 @@ public class Dhoni {
 
     private static final int MAX = 100;
     public static final String line = "-----------------------------------------";
+    public static final String name = "Dhoni";
 
     private static void echo(String text) {
         System.out.println("\t" + line);
@@ -19,23 +20,28 @@ public class Dhoni {
         echo("OK, I've marked this task as not done yet:\n" + text); 
     }
 
-    public static void main(String[] args) {
-
-        Task[] tasks = new Task[MAX];
-        int size = 0;
-
-        String name = "Dhoni";
-        String line = "-----------------------------------------";
+    private static void hello() {
         System.out.println("\t" + line);
         System.out.println("\t" + "Hello! I'm " + name);
         System.out.println("\t" + "What can I do for you? I'm a cricket team captain that loves crushing t20s and tasks");
         System.out.println("\t" + line);
+    }
 
+    public static void main(String[] args) {
+
+        Task[] tasks = new Task[MAX];
+        int size = 0;
+        hello();
         Scanner scanner = new Scanner(System.in);
 
         String userInput = scanner.nextLine();
 
         while (true) {
+            if (userInput.equals("")) {
+                echo("\tEnter a valid task\n\t");
+                continue;
+            }
+
             if (userInput.equals("bye")) {
                 echo("\t" + "Bye. Hope to see you again soon!");
                 break;
@@ -57,6 +63,37 @@ public class Dhoni {
                 int index = Integer.parseInt(userInput.split(" ")[1]) - 1;
                 tasks[index].unmark();
                 unmarkCompleted("\t" + tasks[index].toString());
+            } else if (userInput.startsWith("todo")) {
+                String desc = userInput.substring(5).trim(); // everything after "todo "
+                tasks[size] = new Todo(desc);
+                size++;
+
+                echo("Got it. I've added this task:\n"
+                        + "\t" + tasks[size - 1]
+                        + "\n\tNow you have " + size + " tasks in the list.");
+            } else if (userInput.startsWith("deadline")) {
+                String[] parts = userInput.substring(9).trim().split("/by", 2);
+                String desc = parts[0].trim();
+                String by = parts[1].trim();
+                tasks[size] = new Deadline(desc, by);
+                size++;
+
+                echo("Got it. I've added this task:\n"
+                        + "\t" + tasks[size - 1]
+                        + "\n\tNow you have " + size + " tasks in the list.");
+
+            } else if (userInput.startsWith("event")) {
+                // expected format: event <description> /from <start> /to <end>
+                String[] parts = userInput.substring(6).trim().split("/from|/to", 3);
+                String desc = parts[0].trim();
+                String from = parts[1].trim();
+                String to = parts[2].trim();
+                tasks[size] = new Event(desc, from, to);
+                size++;
+
+                echo("Got it. I've added this task:\n"
+                        + "\t" + tasks[size - 1]
+                        + "\n\tNow you have " + size + " tasks in the list.");
             } else {
                 echo("\t" + userInput);
                 tasks[size] = new Task(userInput);
@@ -67,5 +104,3 @@ public class Dhoni {
         scanner.close();
     }
 }
-
-
