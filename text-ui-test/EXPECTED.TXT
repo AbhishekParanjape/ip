@@ -1,7 +1,48 @@
-Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
-
+    -----------------------------------------
+    Hello! I'm Dhoni
+    What can I do for you? I'm a cricket team captain that loves crushing t20s and tasks
+    -----------------------------------------
+    -----------------------------------------
+    Got it. I've added this task:
+    [T][ ] win cricket match
+    Now you have 1 tasks in the list.
+    -----------------------------------------
+    -----------------------------------------
+    1. [T][ ] win cricket match
+    -----------------------------------------
+    -----------------------------------------
+    Got it. I've added this task:
+    [E][ ] team strategy (from: Tue 7pm to: 9pm)
+    Now you have 2 tasks in the list.
+    -----------------------------------------
+    -----------------------------------------
+    Got it. I've added this task:
+    [D][ ] win cricket match (by: Monday)
+    Now you have 3 tasks in the list.
+    -----------------------------------------
+    -----------------------------------------
+    train
+    -----------------------------------------
+    -----------------------------------------
+    1. [T][ ] win cricket match
+    2. [E][ ] team strategy (from: Tue 7pm to: 9pm)
+    3. [D][ ] win cricket match (by: Monday)
+    4. [ ] train
+    -----------------------------------------
+    -----------------------------------------
+    Nice! I've marked this task as done:
+    [T][X] win cricket match
+    -----------------------------------------
+    -----------------------------------------
+    OK, I've marked this task as not done yet:
+    [T][ ] win cricket match
+    -----------------------------------------
+    -----------------------------------------
+    1. [T][ ] win cricket match
+    2. [E][ ] team strategy (from: Tue 7pm to: 9pm)
+    3. [D][ ] win cricket match (by: Monday)
+    4. [ ] train
+    -----------------------------------------
+    -----------------------------------------
+    Bye. Hope to see you again soon!
+    -----------------------------------------

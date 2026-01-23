@@ -43,11 +43,14 @@ public class Dhoni {
             }
 
             if (userInput.equals("bye")) {
-                echo("\t" + "Bye. Hope to see you again soon!");
+                echo("Bye. Hope to see you again soon!");
                 break;
             } else if (userInput.equals("list") && size != 0) {
                 StringBuilder sb = new StringBuilder();
-                sb.append((1)).append(". ").append(tasks[0].toString()).append("\n");
+                sb.append((1)).append(". ").append(tasks[0].toString());
+                if (0 < size - 1) {
+                    sb.append("\n");
+                }
                 for (int i = 1; i < size; i++) {
                     sb.append("\t" ).append((i + 1)).append(". ").append(tasks[i].toString());
                     if (i < size - 1) {
@@ -95,7 +98,7 @@ public class Dhoni {
                         + "\t" + tasks[size - 1]
                         + "\n\tNow you have " + size + " tasks in the list.");
             } else {
-                echo("\t" + userInput);
+                echo(userInput);
                 tasks[size] = new Task(userInput);
                 size++;
             }

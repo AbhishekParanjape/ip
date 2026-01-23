@@ -1,0 +1,10 @@
+todo win cricket match
+list
+event team strategy /from Tue 7pm /to 9pm
+deadline win cricket match /by Monday
+train
+list
+mark 1
+unmark 1
+list
+bye
