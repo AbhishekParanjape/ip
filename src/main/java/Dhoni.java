@@ -37,7 +37,7 @@ public class Dhoni {
         String userInput = scanner.nextLine();
 
         while (true) {
-            if (userInput.equals("")) {
+            if (userInput.equals("") || userInput.equals("blah")) {
                 echo("\tEnter a valid task\n\t");
                 userInput = scanner.nextLine();
                 continue;
