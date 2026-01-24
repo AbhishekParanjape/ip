@@ -39,6 +39,7 @@ public class Dhoni {
         while (true) {
             if (userInput.equals("")) {
                 echo("\tEnter a valid task\n\t");
+                userInput = scanner.nextLine();
                 continue;
             }
 
@@ -67,6 +68,12 @@ public class Dhoni {
                 tasks[index].unmark();
                 unmarkCompleted("\t" + tasks[index].toString());
             } else if (userInput.startsWith("todo")) {
+                // Error handling for empty description of todo
+                if (userInput.length() <= 4) {
+                    echo("Hey man, stop giving yourself empty tasks. You might not remember what you need to do.");
+                    userInput = scanner.nextLine();
+                    continue;
+                }
                 String desc = userInput.substring(5).trim(); // everything after "todo "
                 tasks[size] = new Todo(desc);
                 size++;
