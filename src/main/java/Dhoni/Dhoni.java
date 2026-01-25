@@ -1,6 +1,8 @@
 package Dhoni;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Dhoni is a task management application that helps users keep track of their tasks.
@@ -75,7 +77,7 @@ public class Dhoni {
                 storage.saveTasks(tasks);
                 break;
             case "find":
-                handleFindByDate(argument);
+                handleFind(argument);
                 break;
             default:
                 tasks.addTask(new Todo(userInput));
@@ -221,50 +223,69 @@ public class Dhoni {
         tasks.addTask(event);
         ui.echo("Got it. I've added this task:\n\t" + event + "\n\tNow you have " + tasks.getSize() + " tasks in the list.");
     }
-
-    /**
-     * Handles finding tasks by a specific date.
-     * @param argument the date to find tasks for in yyyy-MM-dd format
-     */
-    private void handleFindByDate(String argument) {
+    
+    private void handleFind(String argument) throws Exception {
         if (argument.trim().isEmpty()) {
-            ui.echo("Usage: find yyyy-MM-dd");
+            ui.echo("Usage: find <keyword or yyyy-MM-dd>");
             return;
         }
         
+        String trimmedArg = argument.trim();
+        
+        // Try to parse as date first
         try {
-            LocalDate targetDate = LocalDate.parse(argument.trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            StringBuilder sb = new StringBuilder("Tasks on " + targetDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + ":\n");
-            
-            boolean isFound = false;
-            for (int i = 0; i < tasks.getSize(); i++) {
-                Task task = tasks.getTask(i);
-                if (task instanceof Deadline) {
-                    if (((Deadline) task).getDueDay().equals(targetDate)) {
-                        sb.append("\t").append((i + 1)).append(". ").append(task);
-                        if (i < tasks.getSize() - 1) {
-                            sb.append("\n");
-                        }   
-                        isFound = true;
-                    }
-                } else if (task instanceof Event) {
-                    Event event = (Event) task;
-                    if (!event.getFrom().isAfter(targetDate) && !event.getTo().isBefore(targetDate)) {
-                        sb.append("\t").append((i + 1)).append(". ").append(task);
-                        if (i < tasks.getSize() - 1) {
-                            sb.append("\n");
-                        }   
-                        isFound = true;
-                    }
+            LocalDate targetDate = LocalDate.parse(trimmedArg, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            handleFindByDate(targetDate);
+        } catch (Exception e) {
+            // Not a date, search by keyword
+            handleFindByKeyword(trimmedArg);
+        }
+    }
+
+    private void handleFindByDate(LocalDate targetDate) throws Exception {
+        StringBuilder sb = new StringBuilder("Tasks on " + targetDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + ":");
+        boolean found = false;
+        for (int i = 0; i < tasks.getSize(); i++) {
+            Task task = tasks.getTask(i);
+            if (task instanceof Deadline) {
+                if (((Deadline) task).getDueDay().equals(targetDate)) {
+                    sb.append("\n\t").append((i + 1)).append(". ").append(task);
+                    found = true;
+                }
+            } else if (task instanceof Event) {
+                Event event = (Event) task;
+                if (!event.getFrom().isAfter(targetDate) && !event.getTo().isBefore(targetDate)) {
+                    sb.append("\n\t").append((i + 1)).append(". ").append(task);
+                    found = true;
                 }
             }
+        }
+        
+        if (!found) {
+            sb.append("\tNo tasks on this date");
+        }
+        ui.echo(sb.toString());
+    }
 
-            if (!isFound) {
-                sb.append("\tNo tasks on this date");
+    /**
+     * Finds tasks by keyword in description (case-insensitive)
+     * @param keyword the search keyword
+     * @return list of tasks matching the keyword
+     */
+    private void handleFindByKeyword(String keyword) throws Exception {
+        List<Task> foundTasks = tasks.findByKeyword(keyword);
+        
+        if (foundTasks.isEmpty()) {
+            ui.echo("No tasks found matching keyword: " + keyword);
+        } else {
+            StringBuilder sb = new StringBuilder("Tasks matching \"" + keyword + "\":\n");
+            for (int i = 0; i < foundTasks.size(); i++) {
+                sb.append("\t").append(foundTasks.get(i));
+                if (i < foundTasks.size() - 1) {
+                    sb.append("\n");
+                }
             }
             ui.echo(sb.toString());
-        } catch (Exception e) {
-            ui.echo("Invalid date format. Use yyyy-MM-dd");
         }
     }
 }
