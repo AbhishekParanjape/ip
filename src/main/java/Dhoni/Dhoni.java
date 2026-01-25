@@ -124,6 +124,10 @@ public class Dhoni {
         }
     }
 
+    /**
+     * Handles deletion of a task from the task list.
+     * @param argument the task number to be deleted as string
+     */
     private void handleDelete(String argument) throws Exception {
         try {
             int index = Integer.parseInt(argument.trim()) - 1;
@@ -139,6 +143,10 @@ public class Dhoni {
         }
     }
 
+    /**
+     * Handles displaying the list of tasks to the user.
+     * @param tasks the list of tasks to display
+     */
     private void handleList(TaskList tasks) throws Exception {
         if (tasks.isEmpty()) {
                 ui.echo("Here are the tasks in your list:\n\t(no tasks yet)");

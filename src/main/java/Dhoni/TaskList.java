@@ -22,6 +22,11 @@ public class TaskList {
         return tasks.isEmpty();
     }
     
+    /**
+     * Deletes the task at the specified index.
+     * @param index the index of the task to delete
+     * @throws Exception if the index is invalid
+     */
     public void deleteTask(int index) throws Exception {
         if (index < 0 || index >= tasks.size()) {
             throw new Exception("Invalid task number");
@@ -29,6 +34,11 @@ public class TaskList {
         tasks.remove(index);
     }
     
+    /**
+     * Marks the task at the specified index as done.
+     * @param index the index of the task to mark
+     * @throws Exception if the index is invalid
+     */
     public void markTask(int index) throws Exception {
         if (index < 0 || index >= tasks.size()) {
             throw new Exception("Invalid task number");
@@ -36,6 +46,11 @@ public class TaskList {
         tasks.get(index).completed();
     }
     
+    /**
+     * Unmarks the task at the specified index as not done.
+     * @param index the index of the task to unmark
+     * @throws Exception if the index is invalid
+     */
     public void unmarkTask(int index) throws Exception {
         if (index < 0 || index >= tasks.size()) {
             throw new Exception("Invalid task number");
