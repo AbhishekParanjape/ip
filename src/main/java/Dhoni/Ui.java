@@ -1,3 +1,4 @@
+package Dhoni;
 import java.util.Scanner;
 
 public class Ui {
