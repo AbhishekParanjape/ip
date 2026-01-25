@@ -1,10 +1,91 @@
 import java.util.Scanner;
-import java.util.ArrayList;
+import java.util.List;
+/**
+ * Dhoni is a task management application that helps users keep track of their tasks.
+ * It supports adding, marking, unmarking, deleting tasks, and displaying the task list.
+ */
 
 public class Dhoni {
 
     public static final String LINE = "-----------------------------------------";
     public static final String NAME = "Dhoni";
+
+
+    private final List<Task> tasks;
+
+    public Dhoni() {
+        this.tasks = Storage.loadTasks();
+    }
+
+    public static void main(String[] args) {
+        Dhoni dhoni = new Dhoni();
+        dhoni.run();
+    }
+
+    private void run() {
+        hello();
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            String userInput = scanner.nextLine();
+
+            if (userInput.isEmpty()) {
+                echo("Enter a valid command");
+                continue;
+            }
+
+            String command = userInput.split(" ", 2)[0].toLowerCase();
+            String argument = userInput.length() > command.length() ? userInput.substring(command.length() + 1) : "";
+
+            switch (command) {
+            case "bye":
+                echo("Bye. Hope to see you again soon!");
+                scanner.close();
+                return;
+            case "list":
+                handleList(tasks);
+                break;
+            case "mark":
+                handleMark(argument);
+                Storage.saveTasks(tasks);
+                break;
+            case "unmark":
+                handleUnmark(argument);
+                Storage.saveTasks(tasks);
+                break;
+            case "delete":
+                handleDelete(argument);
+                Storage.saveTasks(tasks);
+                break;
+            case "todo":
+                handleToDo(argument);
+                Storage.saveTasks(tasks);
+                break;
+            case "deadline":
+                handleDeadlineTask(argument);
+                Storage.saveTasks(tasks);
+                break;
+            case "event":
+                handleEventTask(argument);
+                Storage.saveTasks(tasks);
+                break;
+            default:
+                tasks.add(new Todo(userInput));
+                Storage.saveTasks(tasks);
+                echo(userInput);
+            }
+        }
+    }
+
+    /**
+     * Prints a welcome message when program starts
+     */
+    private static void hello() {
+        System.out.println("\t" + LINE);
+        System.out.println("\t" + "Hello! I'm " + NAME);
+        System.out.println("\t" + "What can I do for you? I'm a cricket team captain that loves crushing t20s and tasks");
+        System.out.println("\t" + LINE);
+    }
 
     /**
      * Prints message with lines for seperation
@@ -20,37 +101,69 @@ public class Dhoni {
      * Prints confirmation that task has been marked as complete
      * @param text the task input as string
      */
-    private static void markCompleted(String text) {
-        echo("Nice! I've marked this task as done:\n" + text);
+     private void handleUnmark(String argument) {
+        try {
+            int index = Integer.parseInt(argument.trim()) - 1;
+            if (index < 0 || index >= tasks.size()) {
+                echo("Invalid task number");
+                return;
+            }
+            tasks.get(index).unmark();
+            echo("OK, I've marked this task as not done yet:\n\t" + tasks.get(index));
+        } catch (NumberFormatException e) {
+            echo("Please provide a valid task number");
+        }
     }
 
     /**
      * Prints confirmation that task has been marked as incomplete
      * @param text the task input as string
      */
-    private static void unmarkCompleted(String text) {
-        echo("OK, I've marked this task as not done yet:\n" + text); 
-    }
-
-    private static void handleDelete(ArrayList<Task> tasks, int index) {
-        if (tasks.isEmpty()) {
-            throw new IllegalArgumentException("No tasks to delete");
+    private void handleMark(String argument) {
+        try {
+            int index = Integer.parseInt(argument.trim()) - 1;
+            if (index < 0 || index >= tasks.size()) {
+                echo("Invalid task number");
+                return;
+            }
+            tasks.get(index).completed();
+            echo("Nice! I've marked this task as done:\n\t" + tasks.get(index));
+        } catch (NumberFormatException e) {
+            echo("Please provide a valid task number");
         }
-        Task removed = tasks.remove(index);
-
-        echo("Noted. I've removed this task:\n\t"
-                + removed
-                + "\n\tNow you have " + tasks.size() + " tasks in the list.");
     }
 
-    /**
-     * Prints a welcome message when program starts
-     */
-    private static void hello() {
-        System.out.println("\t" + LINE);
-        System.out.println("\t" + "Hello! I'm " + NAME);
-        System.out.println("\t" + "What can I do for you? I'm a cricket team captain that loves crushing t20s and tasks");
-        System.out.println("\t" + LINE);
+    private void handleDelete(String argument) {
+        try {
+            int index = Integer.parseInt(argument.trim()) - 1;
+            if (index < 0 || index >= tasks.size()) {
+                echo("Invalid task number");
+                return;
+            }
+            Task removed = tasks.remove(index);
+            echo("Noted. I've removed this task:\n\t" + removed + "\n\tNow you have " + tasks.size() + " tasks in the list.");
+        } catch (NumberFormatException e) {
+            echo("Please provide a valid task number");
+        }
+    }
+
+    private static void handleList(List<Task> tasks) {
+        if (tasks.isEmpty()) {
+                echo("Here are the tasks in your list:\n\t(no tasks yet)");
+        } else {
+            StringBuilder sb = new StringBuilder();
+            sb.append((1)).append(". ").append(tasks.get(0).toString());
+            if (0 < tasks.size() - 1) {
+                sb.append("\n");
+            }
+            for (int i = 1; i < tasks.size();i++) {
+                sb.append("\t" ).append((i + 1)).append(". ").append(tasks.get(i).toString());
+                if (i < tasks.size() - 1) {
+                    sb.append("\n");
+                }
+            }
+            echo(sb.toString());
+        }
     }
 
     /**
@@ -60,17 +173,14 @@ public class Dhoni {
      * @param tasks new Todo added to tasks
      * @param argument description everything after "todo"
      */
-    public static void handleToDo(ArrayList<Task> tasks, String argument) {
-        if (argument == null || argument.isBlank()) {
-            echo("Hey man, stop giving yourself empty tasks. You might not remember what you need to do.");
+   private void handleToDo(String argument) {
+        if (argument.trim().isEmpty()) {
+            echo("Todo description cannot be empty");
             return;
         }
-        String desc = argument.trim(); 
-        tasks.add(new Todo(desc));
-
-        echo("Got it. I've added this task:\n\t"
-                + tasks.get(tasks.size() - 1)
-                + "\n\tNow you have " + tasks.size() + " tasks in the list.");
+        Task todo = new Todo(argument.trim());
+        tasks.add(todo);
+        echo("Got it. I've added this task:\n\t" + todo + "\n\tNow you have " + tasks.size() + " tasks in the list.");
     }
 
     /**
@@ -80,19 +190,15 @@ public class Dhoni {
      * @param tasks new Deadline task added to tasks
      * @param argument description of the deadline task including by date
      */
-    public static void handleDeadlineTask(ArrayList<Task> tasks, String argument) {
-        if (argument == null || argument.isBlank()) {
-            echo("Hey man, stop giving yourself empty tasks. You might not remember what you need to do.");
+    private void handleDeadlineTask(String argument) {
+        String[] parts = argument.split(" /by ");
+        if (parts.length < 2 || parts[0].trim().isEmpty()) {
+            echo("Deadline format: deadline <description> /by <date>");
             return;
         }
-        String[] parts = argument.split("/by", 2);
-        String desc = parts[0].trim();
-        String by = parts[1].trim();
-        tasks.add(new Deadline(desc, by));
-
-        echo("Got it. I've added this task:\n"
-                + "\t" + tasks.get(tasks.size() - 1)
-                + "\n\tNow you have " + tasks.size() + " tasks in the list.");
+        Task deadline = new Deadline(parts[0].trim(), parts[1].trim());
+        tasks.add(deadline);
+        echo("Got it. I've added this task:\n\t" + deadline + "\n\tNow you have " + tasks.size() + " tasks in the list.");
     }
 
     /**
@@ -100,106 +206,21 @@ public class Dhoni {
      * @param tasks event task added to this list of tasks
      * @param argument description of event consisting of from and to date
      */
-    public static void handleEventTask(ArrayList<Task> tasks, String argument) {
-        String[] parts = argument.split("/from|/to", 3);
-        String desc = parts[0].trim();
-        String from = parts[1].trim();
-        String to = parts[2].trim();
-        tasks.add(new Event(desc, from, to));
-        int numberOfTasks = tasks.size();
-
-        echo("Got it. I've added this task:\n\t"
-                + tasks.get(numberOfTasks - 1)
-                + "\n\tNow you have " + numberOfTasks + " tasks in the list.");
-    }
-
-    public static void main(String[] args) {
-        hello();
-
-        ArrayList<Task> tasks = new ArrayList<>();
-
-        Scanner scanner = new Scanner(System.in);
-
-        String userInput = scanner.nextLine();
-
-        while (true) {
-            if (userInput.equals("") || userInput.equals("blah")) {
-                echo("Enter a valid task");
-                userInput = scanner.nextLine();
-                continue;
-            }
-
-            String[] parts = userInput.split("\\s+", 2);
-            String taskType = parts[0];                         // e.g., "Deadline"
-            String taskArgs = (parts.length > 1) ? parts[1].trim() : ""; // e.g., "Train cricket"
-
-            switch (taskType) {
-            case "bye": {
-                echo("Bye. Hope to see you again soon!");
-                scanner.close();
-                return;
-            }
-            case "list": {
-                if (tasks.isEmpty()) {
-                    echo("Here are the tasks in your list:\n\t  (no tasks yet)");
-                    scanner.nextLine();
-                } else {
-                    StringBuilder sb = new StringBuilder();
-                    sb.append((1)).append(". ").append(tasks.get(0).toString());
-                    if (0 < tasks.size() - 1) {
-                        sb.append("\n");
-                    }
-                    for (int i = 1; i < tasks.size();i++) {
-                        sb.append("\t" ).append((i + 1)).append(". ").append(tasks.get(i).toString());
-                        if (i < tasks.size() - 1) {
-                            sb.append("\n");
-                        }
-                    }
-                    echo(sb.toString());
-                }
-                break;
-            }
-            case "mark": {
-                int index = Integer.parseInt(userInput.split(" ")[1]) - 1;
-                tasks.get(index).completed();
-                markCompleted("\t" + tasks.get(index).toString());
-                break;
-            }
-            case "unmark": {
-                int index = Integer.parseInt(userInput.split(" ")[1]) - 1;
-                tasks.get(index).unmark();
-                unmarkCompleted("\t" + tasks.get(index).toString());
-                break;
-            }
-            case "todo": {
-                // Error handling for empty description
-                if (userInput.length() == 4) {
-                    echo("Hey man, stop giving yourself empty tasks. You might not remember what you need to do.");
-                    continue;
-                }
-                handleToDo(tasks, taskArgs);
-                break;
-            }
-            case "deadline": {
-                handleDeadlineTask(tasks, taskArgs);
-                break;
-            }
-            case "event": {
-                handleEventTask(tasks, taskArgs);
-                break;
-            }
-            case "delete": {
-                int index = Integer.parseInt(userInput.split(" ")[1]) - 1;
-                handleDelete(tasks, index);
-                break;
-            }
-            default: {
-                tasks.add(new Task(userInput));
-                echo(userInput);
-                break;
-            }
-            }
-            userInput = scanner.nextLine();   
+   private void handleEventTask(String argument) {
+        String[] parts = argument.split(" /from ");
+        if (parts.length < 2) {
+            echo("Event format: event <description> /from <time> /to <time>");
+            return;
         }
+        
+        String[] timeParts = parts[1].split(" /to ");
+        if (timeParts.length < 2) {
+            echo("Event format: event <description> /from <time> /to <time>");
+            return;
+        }
+        
+        Task event = new Event(parts[0].trim(), timeParts[0].trim(), timeParts[1].trim());
+        tasks.add(event);
+        echo("Got it. I've added this task:\n\t" + event + "\n\tNow you have " + tasks.size() + " tasks in the list.");
     }
 }
