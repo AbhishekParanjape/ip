@@ -1,3 +1,4 @@
+package Dhoni;
 public class Parser {
     public static String getCommand(String input) {
         return input.split(" ", 2)[0].toLowerCase();
