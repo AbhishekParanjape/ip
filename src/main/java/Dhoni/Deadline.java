@@ -2,6 +2,9 @@ package Dhoni;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents a deadline task with a description and due date.
+ */
 public class Deadline extends Task{
     private LocalDate dueDay;
     private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");

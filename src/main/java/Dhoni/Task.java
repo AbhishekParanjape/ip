@@ -27,7 +27,12 @@ public class Task {
     public String toFileFormat() {
         return "X | " + (isDone ? "1" : "0") + " | " + description;
     }
-    
+
+    /**
+     * Creates a Task object from a line in the file.
+     * @param line the line to parse
+     * @return the Task object or null if parsing fails
+     */
     public static Task fromFileFormat(String line) {
         String[] parts = line.split(" \\| ");
         if (parts.length < 2) return null;
