@@ -224,7 +224,7 @@ public class Dhoni {
             LocalDate targetDate = LocalDate.parse(argument.trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             StringBuilder sb = new StringBuilder("Tasks on " + targetDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + ":\n");
             
-            boolean found = false;
+            boolean isFound = false;
             for (int i = 0; i < tasks.getSize(); i++) {
                 Task task = tasks.getTask(i);
                 if (task instanceof Deadline) {
@@ -233,7 +233,7 @@ public class Dhoni {
                         if (i < tasks.getSize() - 1) {
                             sb.append("\n");
                         }   
-                        found = true;
+                        isFound = true;
                     }
                 } else if (task instanceof Event) {
                     Event event = (Event) task;
@@ -242,12 +242,12 @@ public class Dhoni {
                         if (i < tasks.getSize() - 1) {
                             sb.append("\n");
                         }   
-                        found = true;
+                        isFound = true;
                     }
                 }
             }
-            
-            if (!found) {
+
+            if (!isFound) {
                 sb.append("\tNo tasks on this date");
             }
             ui.echo(sb.toString());
