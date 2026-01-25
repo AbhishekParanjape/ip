@@ -1,13 +1,19 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Deadline extends Task{
-    private String dueDay;
+    private LocalDate dueDay;
+    private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy");
+    
 
     public Deadline(String description, String dueDay) {
         super(description);
-        this.dueDay = dueDay;
+        this.dueDay = LocalDate.parse(dueDay, INPUT_FORMAT);
     }
 
-    public String getDueDay() {
-        return "(by: " + this.dueDay + ")";
+    public LocalDate getDueDay() {
+        return dueDay;
     }
 
     @Override
@@ -17,6 +23,6 @@ public class Deadline extends Task{
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " " + getDueDay();
+        return "[D]" + super.toString() + " " + "(by: " + dueDay.format(OUTPUT_FORMAT) + ")";
     }
 }
