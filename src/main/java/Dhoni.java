@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 /**
  * Dhoni is a task management application that helps users keep track of their tasks.
@@ -68,6 +70,9 @@ public class Dhoni {
             case "event":
                 handleEventTask(argument);
                 Storage.saveTasks(tasks);
+                break;
+            case "find":
+                handleFindByDate(argument);
                 break;
             default:
                 tasks.add(new Todo(userInput));
@@ -222,5 +227,47 @@ public class Dhoni {
         Task event = new Event(parts[0].trim(), timeParts[0].trim(), timeParts[1].trim());
         tasks.add(event);
         echo("Got it. I've added this task:\n\t" + event + "\n\tNow you have " + tasks.size() + " tasks in the list.");
+    }
+
+    private void handleFindByDate(String argument) {
+        if (argument.trim().isEmpty()) {
+            echo("Usage: find yyyy-MM-dd");
+            return;
+        }
+        
+        try {
+            LocalDate targetDate = LocalDate.parse(argument.trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            StringBuilder sb = new StringBuilder("Tasks on " + targetDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + ":\n");
+            
+            boolean found = false;
+            for (int i = 0; i < tasks.size(); i++) {
+                Task task = tasks.get(i);
+                if (task instanceof Deadline) {
+                    if (((Deadline) task).getDueDay().equals(targetDate)) {
+                        sb.append("\t").append((i + 1)).append(". ").append(task);
+                        if (i < tasks.size() - 1) {
+                            sb.append("\n");
+                        }   
+                        found = true;
+                    }
+                } else if (task instanceof Event) {
+                    Event event = (Event) task;
+                    if (!event.getFrom().isAfter(targetDate) && !event.getTo().isBefore(targetDate)) {
+                        sb.append("\t").append((i + 1)).append(". ").append(task);
+                        if (i < tasks.size() - 1) {
+                            sb.append("\n");
+                        }   
+                        found = true;
+                    }
+                }
+            }
+            
+            if (!found) {
+                sb.append("\tNo tasks on this date");
+            }
+            echo(sb.toString());
+        } catch (Exception e) {
+            echo("Invalid date format. Use yyyy-MM-dd");
+        }
     }
 }
