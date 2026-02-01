@@ -73,17 +73,19 @@ public class TaskList {
         return tasks.get(index);
     }
     
-    public List<Task> findByDate(LocalDate targetDate) {
+    public List<Task> findByDate(LocalDate... targetDates) {
         List<Task> result = new ArrayList<>();
-        for (Task task : tasks) {
-            if (task instanceof Deadline) {
-                if (((Deadline) task).getDueDay().equals(targetDate)) {
-                    result.add(task);
-                }
-            } else if (task instanceof Event) {
-                Event event = (Event) task;
-                if (!event.getFrom().isAfter(targetDate) && !event.getTo().isBefore(targetDate)) {
-                    result.add(task);
+        for (LocalDate targetDate : targetDates) {
+            for (Task task : tasks) {
+                if (task instanceof Deadline) {
+                    if (((Deadline) task).getDueDay().equals(targetDate)) {
+                        result.add(task);
+                    }
+                } else if (task instanceof Event) {
+                    Event event = (Event) task;
+                    if (!event.getFrom().isAfter(targetDate) && !event.getTo().isBefore(targetDate)) {
+                        result.add(task);
+                    }
                 }
             }
         }
@@ -95,12 +97,14 @@ public class TaskList {
      * @param keyword the search keyword
      * @return list of tasks matching the keyword
      */
-    public List<Task> findByKeyword(String keyword) {
+    public List<Task> findByKeyword(String... keywords) {
         List<Task> result = new ArrayList<>();
-        String searchTerm = keyword.toLowerCase();
-        for (Task task : tasks) {
-            if (task.description.toLowerCase().contains(searchTerm)) {
-                result.add(task);
+        for (String keyword : keywords) {
+            String searchTerm = keyword.toLowerCase();
+            for (Task task : tasks) {
+                if (task.description.toLowerCase().contains(searchTerm)) {
+                    result.add(task);
+                }
             }
         }
         return result;
