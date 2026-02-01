@@ -162,42 +162,35 @@ public class Parser {
     
     private static String handleFind(TaskList tasks, String argument) throws Exception {
         if (argument.trim().isEmpty()) {
-            return "Usage: find <keyword or yyyy-MM-dd>";
+            return "Usage: find <keyword or yyyy-MM-dd>/<additional keywords or dates>";
         }
-        
-        String trimmedArg = argument.trim();
-        
         // Try to parse as date first
+        //splice argument by '/'' and parse each line as date
+        String[] arg = argument.split("/");
         try {
-            LocalDate targetDate = LocalDate.parse(trimmedArg, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            return handleFindByDate(tasks, targetDate);
+            
+            return handleFindByDate(tasks, arg[0].trim().lines()
+                    .map(dateStr -> LocalDate.parse(dateStr.trim(), DateTimeFormatter.ISO_LOCAL_DATE))
+                    .toArray(LocalDate[]::new) );
         } catch (Exception e) {
             // Not a date, search by keyword
-            return handleFindByKeyword(tasks, trimmedArg);
+            return handleFindByKeyword(tasks, arg);
         }
     }
 
-    private static String handleFindByDate(TaskList tasks, LocalDate targetDate) throws Exception {
-        StringBuilder sb = new StringBuilder("Tasks on " + targetDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + ":");
-        boolean found = false;
-        for (int i = 0; i < tasks.getSize(); i++) {
-            Task task = tasks.getTask(i);
-            if (task instanceof Deadline) {
-                if (((Deadline) task).getDueDay().equals(targetDate)) {
-                    sb.append("\n\t").append((i + 1)).append(". ").append(task);
-                    found = true;
-                }
-            } else if (task instanceof Event) {
-                Event event = (Event) task;
-                if (!event.getFrom().isAfter(targetDate) && !event.getTo().isBefore(targetDate)) {
-                    sb.append("\n\t").append((i + 1)).append(". ").append(task);
-                    found = true;
-                }
-            }
-        }
+    private static String handleFindByDate(TaskList tasks, LocalDate... targetDates) throws Exception {
+        StringBuilder sb = new StringBuilder("Tasks on " + targetDates + ":");
+        List<Task> foundTasks = tasks.findByDate(targetDates);
         
-        if (!found) {
-            sb.append("\tNo tasks on this date");
+        if (foundTasks.isEmpty()) {
+            sb.append("\n\tNo tasks found on this date.");
+        } else {
+            // Use streams to format the task list more elegantly
+            String taskList = foundTasks.stream()
+                    .map(Task::toString)
+                    .reduce((task1, task2) -> task1 + "\n\t" + task2)
+                    .orElse("");
+            sb.append("\n\t").append(taskList);
         }
         return sb.toString();
     }
@@ -207,13 +200,13 @@ public class Parser {
      * @param keyword the search keyword
      * @return list of tasks matching the keyword
      */
-    private static String handleFindByKeyword(TaskList tasks, String keyword) throws Exception {
-        List<Task> foundTasks = tasks.findByKeyword(keyword);
+    private static String handleFindByKeyword(TaskList tasks, String... keywords) throws Exception {
+        List<Task> foundTasks = tasks.findByKeyword(keywords);
         
         if (foundTasks.isEmpty()) {
-            return ("No tasks found matching keyword: " + keyword);
+            return ("No tasks found matching keyword: " + keywords);
         } else {
-            StringBuilder sb = new StringBuilder("Tasks matching \"" + keyword + "\":\n");
+            StringBuilder sb = new StringBuilder("Tasks matching \"" + keywords + "\":\n");
             for (int i = 0; i < foundTasks.size(); i++) {
                 sb.append("\t").append(foundTasks.get(i));
                 if (i < foundTasks.size() - 1) {
