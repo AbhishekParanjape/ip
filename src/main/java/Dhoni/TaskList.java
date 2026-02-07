@@ -28,6 +28,8 @@ public class TaskList {
      * @throws Exception if the index is invalid
      */
     public void deleteTask(int index) throws Exception {
+        assert index >= 0 : "Index should not be negative";
+        assert index < tasks.size() : "Index should be within bounds";
         if (index < 0 || index >= tasks.size()) {
             throw new Exception("Invalid task number");
         }
@@ -40,6 +42,8 @@ public class TaskList {
      * @throws Exception if the index is invalid
      */
     public void markTask(int index) throws Exception {
+        assert index >= 0 : "Index should not be negative";
+        assert index < tasks.size() : "Index should be within bounds";
         if (index < 0 || index >= tasks.size()) {
             throw new Exception("Invalid task number");
         }
@@ -52,6 +56,8 @@ public class TaskList {
      * @throws Exception if the index is invalid
      */
     public void unmarkTask(int index) throws Exception {
+        assert index >= 0 : "Index should not be negative";
+        assert index < tasks.size() : "Index should be within bounds";
         if (index < 0 || index >= tasks.size()) {
             throw new Exception("Invalid task number");
         }
@@ -67,6 +73,8 @@ public class TaskList {
     }
     
     public Task getTask(int index) throws Exception {
+        assert index >= 0 : "Index should not be negative";
+        assert index < tasks.size() : "Index should be within bounds";
         if (index < 0 || index >= tasks.size()) {
             throw new Exception("Invalid task number");
         }
