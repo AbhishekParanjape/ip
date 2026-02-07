@@ -7,10 +7,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javax.smartcardio.CommandAPDU;
 
 /**
- * Controller for the main GUI.
+ * Controller for the main GUI window.
+ * This class handles the interaction between the user interface and the Dhoni application logic.
  */
 public class MainWindow extends AnchorPane {
     @FXML
@@ -27,19 +27,29 @@ public class MainWindow extends AnchorPane {
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
     private Image dhoniImage = new Image(this.getClass().getResourceAsStream("/images/DaDhoni.png"));
 
+    /**
+     * Initializes the main window.
+     * Binds the scroll pane's vertical value to the dialog container's height property.
+     */
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    /** Injects the Dhoni instance */
+    /**
+     * Injects the Dhoni instance into this controller.
+     * 
+     * @param d the Dhoni application instance
+     */
     public void setDhoni(Dhoni d) {
         dhoni = d;
     }
 
     /**
-     * Creates two dialog boxes, one echoing user input and the other containing dhoni's reply and then appends them to
-     * the dialog container. Clears the user input after processing.
+     * Handles user input from the text field.
+     * Creates dialog boxes for both user input and Dhoni's response, then clears the input field.
+     * 
+     * @throws Exception if there's an error processing the user input
      */
     @FXML
     private void handleUserInput() throws Exception {

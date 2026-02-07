@@ -5,11 +5,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Parser class handles parsing user input and executing commands.
+ * This class provides methods to extract command parts and execute various operations.
+ */
 public class Parser {
     /**
      * Extracts the command part from the user input.
+     * 
      * @param input the full user input
-     * @return the command part of the input
+     * @return the command part of the input in lowercase
      */
     public static String getCommand(String input) {
         assert input != null : "Input should not be null";
@@ -18,8 +23,9 @@ public class Parser {
     
     /**
      * Extracts the argument part from the user input.
+     * 
      * @param input the full user input
-     * @return the argument part of the input
+     * @return the argument part of the input, or empty string if no argument
      */
     public static String getArgument(String input) {
         assert input != null : "Input should not be null";
@@ -28,8 +34,11 @@ public class Parser {
     }
 
     /**
-     * Prints confirmation that task has been marked as complete
-     * @param text the task input as string
+     * Validates and parses task index from user argument.
+     * 
+     * @param argument the user input argument containing task number
+     * @param tasks the task list to validate against
+     * @return the parsed index (0-based) or -1 if invalid
      */
     private static String handleUnmark(TaskList tasks, String argument, Storage storage) throws Exception {
         assert tasks != null : "Task list should not be null";
@@ -39,19 +48,21 @@ public class Parser {
             int index = Integer.parseInt(argument.trim()) - 1;
             assert index >= -1 : "Index should not be less than -1";
             if (index < 0 || index >= tasks.getSize()) {
-                return "Invalid task number";
+                return -1;
             }
-            tasks.getTask(index).unmark();
-            storage.saveTasks(tasks);
-           return "OK, I've marked this task as not done yet:\n\t" + tasks.getTask(index);
+            return index;
         } catch (NumberFormatException e) {
-            return "Please provide a valid task number";
+            return -1;
         }
     }
 
     /**
-     * Prints confirmation that task has been marked as incomplete
-     * @param text the task input as string
+     * Handles marking a task as completed.
+     * 
+     * @param tasks the task list containing the task to mark
+     * @param argument the task number to mark (1-based)
+     * @param storage the storage to save changes
+     * @return response message
      */
     private static String handleMark(TaskList tasks, String argument, Storage storage) throws Exception {
         assert tasks != null : "Task list should not be null";
@@ -69,11 +80,38 @@ public class Parser {
         } catch (NumberFormatException e) {
             return "Please provide a valid task number";
         }
+        
+        tasks.getTask(index).completed();
+        storage.saveTasks(tasks);
+        return "Nice! I've marked this task as done:\n\t" + tasks.getTask(index);
+    }
+
+    /**
+     * Handles marking a task as not completed.
+     * 
+     * @param tasks the task list containing the task to unmark
+     * @param argument the task number to unmark (1-based)
+     * @param storage the storage to save changes
+     * @return response message
+     */
+    private static String handleUnmark(TaskList tasks, String argument, Storage storage) throws Exception {
+        int index = parseTaskIndex(argument, tasks);
+        if (index == -1) {
+            return "Invalid task number";
+        }
+        
+        tasks.getTask(index).unmark();
+        storage.saveTasks(tasks);
+        return "OK, I've marked this task as not done yet:\n\t" + tasks.getTask(index);
     }
 
     /**
      * Handles deletion of a task from the task list.
-     * @param argument the task number to be deleted as string
+     * 
+     * @param tasks the task list to delete from
+     * @param argument the task number to delete (1-based)
+     * @param storage the storage to save changes
+     * @return response message
      */
     private static String handleDelete(TaskList tasks, String argument, Storage storage) throws Exception {
         assert tasks != null : "Task list should not be null";
@@ -93,30 +131,33 @@ public class Parser {
         } catch (NumberFormatException e) {
             return "Please provide a valid task number";
         }
+        
+        Task removed = tasks.getTask(index);
+        tasks.deleteTask(index);
+        storage.saveTasks(tasks);
+        return "Noted. I've removed this task:\n\t" + removed + "\n\tNow you have " + tasks.getSize() + " tasks in the list.";
     }
 
     /**
      * Handles displaying the list of tasks to the user.
+     * 
      * @param tasks the list of tasks to display
+     * @return formatted string representation of the task list
      */
     private static String handleList(TaskList tasks) throws Exception {
         assert tasks != null : "Task list should not be null";
         if (tasks.isEmpty()) {
-                return "Here are the tasks in your list:\n\t(no tasks yet)";
-        } else {
-            StringBuilder sb = new StringBuilder();
-            sb.append((1)).append(". ").append(tasks.getTask(0).toString());
-            if (0 < tasks.getSize() - 1) {
+            return "Here are the tasks in your list:\n\t(no tasks yet)";
+        }
+        
+        StringBuilder sb = new StringBuilder("Here are the tasks in your list:\n");
+        for (int i = 0; i < tasks.getSize(); i++) {
+            sb.append("\t").append((i + 1)).append(". ").append(tasks.getTask(i).toString());
+            if (i < tasks.getSize() - 1) {
                 sb.append("\n");
             }
-            for (int i = 1; i < tasks.getSize();i++) {
-                sb.append("\t" ).append((i + 1)).append(". ").append(tasks.getTask(i).toString());
-                if (i < tasks.getSize() - 1) {
-                    sb.append("\n");
-                }
-            }
-            return sb.toString();
         }
+        return sb.toString();
     }
 
     /**
