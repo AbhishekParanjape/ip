@@ -1,4 +1,5 @@
 package Dhoni;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -10,20 +11,33 @@ import java.util.List;
 
 /**
  * Storage handles saving and loading tasks to and from a file.
+ * This class provides methods to persist task data and retrieve it later.
  */
 public class Storage {
     private String filePath;
 
+    /**
+     * Constructs a Storage object with the specified file path.
+     * 
+     * @param filePath the path to the file where tasks will be stored
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Constructs a Storage object with a default file path.
+     * This constructor is provided for backward compatibility.
+     */
     public Storage() {
     }
     
     /**
-     * Saves tasks to file
-     * @param tasks the list of tasks to save
+     * Saves the given task list to the file.
+     * Creates the necessary directories if they don't exist.
+     * 
+     * @param tasks the task list to save
+     * @throws Exception if there's an error during file operations
      */
     public void saveTasks(TaskList tasks) throws Exception {
         try {
@@ -41,8 +55,11 @@ public class Storage {
     }
     
     /**
-     * Loads tasks from file. Handles missing file gracefully.
-     * @return ArrayList of tasks loaded from file
+     * Loads tasks from the file.
+     * Returns an empty list if the file doesn't exist.
+     * 
+     * @return list of tasks loaded from the file
+     * @throws Exception if there's an error during file operations
      */
     public List<Task> loadTasks() throws Exception {
         List<Task> tasks = new ArrayList<>();

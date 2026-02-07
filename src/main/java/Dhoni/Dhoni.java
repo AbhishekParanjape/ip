@@ -1,4 +1,5 @@
 package Dhoni;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.Scanner;
 /**
  * Dhoni is a task management application that helps users keep track of their tasks.
  * It supports adding, marking, unmarking, deleting tasks, and displaying the task list.
+ * This class provides both CLI and GUI interfaces for task management.
  */
 public class Dhoni {
     
@@ -16,6 +18,10 @@ public class Dhoni {
     private static Scanner scanner = new Scanner(System.in);
     private static final String filePath = "data/tasks.txt";
    
+    /**
+     * Constructs a Dhoni application instance.
+     * Initializes storage and loads existing tasks from file.
+     */
     public Dhoni() {
         storage = new Storage(filePath);
 
@@ -27,6 +33,13 @@ public class Dhoni {
         }
     }
 
+    /**
+     * Main method for command-line interface.
+     * Starts the CLI version of the application.
+     * 
+     * @param args command line arguments (not used)
+     * @throws Exception if there's an error during execution
+     */
     public static void main(String[] args) throws Exception {
         new Dhoni();
         Ui.hello();
@@ -56,7 +69,11 @@ public class Dhoni {
     }
 
     /**
-     * Generates a response for the user's message.
+     * Generates a response for the user's message in GUI mode.
+     * 
+     * @param userInput the user's input command
+     * @return the response string to display to the user
+     * @throws Exception if there's an error during processing
      */
     public String getResponse(String userInput) throws Exception {
         if (userInput == null) {

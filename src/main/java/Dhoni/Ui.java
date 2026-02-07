@@ -1,9 +1,12 @@
 package Dhoni;
 
+/**
+ * Ui class handles user interface operations.
+ * This class provides methods to display messages and interact with the user.
+ */
 public class Ui {
     public static final String LINE = "-----------------------------------------";
     public static final String NAME = "Dhoni";
-    
     
     /**
      * Displays the welcome message to the user.
@@ -17,6 +20,7 @@ public class Ui {
 
     /**
      * Prints the given text in a formatted way with lines above and below.
+     * 
      * @param text the text to print
      */
     public static void echo(String text) {
@@ -25,6 +29,9 @@ public class Ui {
         System.out.println("\t" + LINE);
     }
     
+    /**
+     * Displays an error message when loading tasks from file fails.
+     */
     public static void showLoadingError() {
         echo("Error loading tasks from file. Starting with an empty task list.");
     }
