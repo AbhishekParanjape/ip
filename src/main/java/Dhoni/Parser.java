@@ -292,16 +292,20 @@ public class Parser {
             Ui.echo(handleDelete(tasks, argument, storage));
             break;
         case "todo":
+        case "t":
             Ui.echo(handleToDo(tasks, argument, storage));
             
             break;
         case "deadline":
+        case "d":
             Ui.echo(handleDeadlineTask(tasks, argument, storage));
             break;
         case "event":
+        case "e":
             Ui.echo(handleEventTask(tasks,argument, storage));
             break;
         case "find":
+        case "f":
             Ui.echo(handleFind(tasks, argument));
             break;
         default:
@@ -335,12 +339,16 @@ public class Parser {
         case "delete": 
             return handleDelete(tasks, argument, storage);
         case "todo": 
+        case "t":
             return handleToDo(tasks, argument, storage);
         case "deadline": 
+        case "d":
             return handleDeadlineTask(tasks, argument, storage);
         case "event": 
+        case "e":
             return handleEventTask(tasks, argument, storage);
         case "find": 
+        case "f":
             return handleFind(tasks, argument);
         default:
             tasks.addTask(new Todo(userInput));
