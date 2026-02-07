@@ -17,6 +17,7 @@ public class Parser {
      * @return the command part of the input in lowercase
      */
     public static String getCommand(String input) {
+        assert input != null : "Input should not be null";
         return input.split(" ", 2)[0].toLowerCase();
     }
     
@@ -27,6 +28,7 @@ public class Parser {
      * @return the argument part of the input, or empty string if no argument
      */
     public static String getArgument(String input) {
+        assert input != null : "Input should not be null";
         String[] parts = input.split(" ", 2);
         return parts.length > 1 ? parts[1] : "";
     }
@@ -38,9 +40,13 @@ public class Parser {
      * @param tasks the task list to validate against
      * @return the parsed index (0-based) or -1 if invalid
      */
-    private static int parseTaskIndex(String argument, TaskList tasks) {
+    private static String handleUnmark(TaskList tasks, String argument, Storage storage) throws Exception {
+        assert tasks != null : "Task list should not be null";
+        assert argument != null : "Argument should not be null";
+        assert storage != null : "Storage should not be null";
         try {
             int index = Integer.parseInt(argument.trim()) - 1;
+            assert index >= -1 : "Index should not be less than -1";
             if (index < 0 || index >= tasks.getSize()) {
                 return -1;
             }
@@ -59,9 +65,20 @@ public class Parser {
      * @return response message
      */
     private static String handleMark(TaskList tasks, String argument, Storage storage) throws Exception {
-        int index = parseTaskIndex(argument, tasks);
-        if (index == -1) {
-            return "Invalid task number";
+        assert tasks != null : "Task list should not be null";
+        assert argument != null : "Argument should not be null";
+        assert storage != null : "Storage should not be null";
+        try {
+            int index = Integer.parseInt(argument.trim()) - 1;
+            assert index >= -1 : "Index should not be less than -1";
+            if (index < 0 || index >= tasks.getSize()) {
+                return "Invalid task number";
+            }
+            tasks.getTask(index).completed();
+            storage.saveTasks(tasks);
+            return "Nice! I've marked this task as done:\n\t" + tasks.getTask(index);
+        } catch (NumberFormatException e) {
+            return "Please provide a valid task number";
         }
         
         tasks.getTask(index).completed();
@@ -97,9 +114,22 @@ public class Parser {
      * @return response message
      */
     private static String handleDelete(TaskList tasks, String argument, Storage storage) throws Exception {
-        int index = parseTaskIndex(argument, tasks);
-        if (index == -1) {
-            return "Invalid task number";
+        assert tasks != null : "Task list should not be null";
+        assert argument != null : "Argument should not be null";
+        assert storage != null : "Storage should not be null";
+        try {
+            int index = Integer.parseInt(argument.trim()) - 1;
+            assert index >= -1 : "Index should not be less than -1";
+            if (index < 0 || index >= tasks.getSize()) {
+                return "Invalid task number";
+            }
+            Task removed = tasks.getTask(index);
+            assert removed != null : "Removed task should not be null";
+            tasks.deleteTask(index);
+            storage.saveTasks(tasks);
+            return "Noted. I've removed this task:\n\t" + removed + "\n\tNow you have " + tasks.getSize() + " tasks in the list.";
+        } catch (NumberFormatException e) {
+            return "Please provide a valid task number";
         }
         
         Task removed = tasks.getTask(index);
@@ -115,6 +145,7 @@ public class Parser {
      * @return formatted string representation of the task list
      */
     private static String handleList(TaskList tasks) throws Exception {
+        assert tasks != null : "Task list should not be null";
         if (tasks.isEmpty()) {
             return "Here are the tasks in your list:\n\t(no tasks yet)";
         }
@@ -137,10 +168,14 @@ public class Parser {
      * @param argument description everything after "todo"
      */
     private static String handleToDo(TaskList tasks, String argument, Storage storage) throws Exception {
+        assert tasks != null : "Task list should not be null";
+        assert argument != null : "Argument should not be null";
+        assert storage != null : "Storage should not be null";
         if (argument.trim().isEmpty()) {
             return "Todo description cannot be empty";
         }
         Task todo = new Todo(argument.trim());
+        assert todo != null : "Created todo should not be null";
         tasks.addTask(todo);
         storage.saveTasks(tasks);
         return "Got it. I've added this task:\n\t" + todo + "\n\tNow you have " + tasks.getSize() + " tasks in the list.";
@@ -154,11 +189,16 @@ public class Parser {
      * @param argument description of the deadline task including by date
      */
     private static String handleDeadlineTask(TaskList tasks, String argument, Storage storage) throws Exception {
+        assert tasks != null : "Task list should not be null";
+        assert argument != null : "Argument should not be null";
+        assert storage != null : "Storage should not be null";
         String[] parts = argument.split(" /by ");
+        assert parts != null : "Split result should not be null";
         if (parts.length < 2 || parts[0].trim().isEmpty()) {
             return "Deadline format: deadline <description> /by <date>";
         }
         Task deadline = new Deadline(parts[0].trim(), parts[1].trim());
+        assert deadline != null : "Created deadline should not be null";
         tasks.addTask(deadline);
         storage.saveTasks(tasks);
         return "Got it. I've added this task:\n\t" + deadline + "\n\tNow you have " + tasks.getSize() + " tasks in the list.";
@@ -170,23 +210,31 @@ public class Parser {
      * @param argument description of event consisting of from and to date
      */
     private static String handleEventTask(TaskList tasks, String argument, Storage storage) throws Exception {
+        assert tasks != null : "Task list should not be null";
+        assert argument != null : "Argument should not be null";
+        assert storage != null : "Storage should not be null";
         String[] parts = argument.split(" /from ");
+        assert parts != null : "Split result should not be null";
         if (parts.length < 2) {
             return "Event format: event <description> /from <time> /to <time>";
         }
         
         String[] timeParts = parts[1].split(" /to ");
+        assert timeParts != null : "Time parts split result should not be null";
         if (timeParts.length < 2) {
             return "Event format: event <description> /from <time> /to <time>";
         }
         
         Task event = new Event(parts[0].trim(), timeParts[0].trim(), timeParts[1].trim());
+        assert event != null : "Created event should not be null";
         tasks.addTask(event);
         storage.saveTasks(tasks);
         return "Got it. I've added this task:\n\t" + event + "\n\tNow you have " + tasks.getSize() + " tasks in the list.";
     }
     
     private static String handleFind(TaskList tasks, String argument) throws Exception {
+        assert tasks != null : "Task list should not be null";
+        assert argument != null : "Argument should not be null";
         if (argument.trim().isEmpty()) {
             return "Usage: find <keyword or yyyy-MM-dd>/<additional keywords or dates>";
         }
@@ -242,6 +290,11 @@ public class Parser {
 
     public static boolean execute(String command, TaskList tasks, Storage storage,
                                           Scanner scanner, String argument, String userInput) throws Exception {
+        assert command != null : "Command should not be null";
+        assert tasks != null : "Task list should not be null";
+        assert storage != null : "Storage should not be null";
+        assert scanner != null : "Scanner should not be null";
+        assert userInput != null : "User input should not be null";
         
         switch (command) {
         case "bye":
@@ -287,6 +340,11 @@ public class Parser {
      */
     public static String executeGui(String command, TaskList tasks, Storage storage,
                                     String argument, String userInput) throws Exception {
+        assert command != null : "Command should not be null";
+        assert tasks != null : "Task list should not be null";
+        assert storage != null : "Storage should not be null";
+        assert userInput != null : "User input should not be null";
+        
         switch (command) {
         case "bye":
             return "Bye. Hope to see you again soon!";
