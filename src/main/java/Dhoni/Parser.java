@@ -259,9 +259,12 @@ public class Parser {
         if (foundTasks.isEmpty()) {
             sb.append("\n\tNo tasks found on this date.");
         } else {
-            for (int i = 0; i < foundTasks.size(); i++) {
-                sb.append("\n\t").append(foundTasks.get(i));
-            }
+            // Use streams to format the task list more elegantly
+            String taskList = foundTasks.stream()
+                    .map(Task::toString)
+                    .reduce((task1, task2) -> task1 + "\n\t" + task2)
+                    .orElse("");
+            sb.append("\n\t").append(taskList);
         }
         return sb.toString();
     }
