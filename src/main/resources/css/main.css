@@ -1,26 +1,48 @@
 .root {
-    main-color: rgb(237, 255, 242);       /* Create a looked-up color called "main-color" within root. */
+    main-color: #f5f5dc;       /* Beige wood-like background */
+    accent-color: #8b4513;     /* Saddle brown for accents */
+    text-color: #2c1e14;       /* Dark brown for text */
     -fx-background-color: main-color;
+    -fx-font-family: "Georgia", serif;
 }
 
 .text-field {
-    -fx-background-color: #d9ffe2;
-    -fx-font: 20px "Arial";
+    -fx-background-color: #ffffff;
+    -fx-border-color: #8b4513;
+    -fx-border-width: 2px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-font: 16px "Georgia", serif;
+    -fx-text-fill: #2c1e14;
+    -fx-padding: 8px;
+}
+
+.text-field:focused {
+    -fx-border-color: #5d4037;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0.5, 0, 2);
 }
 
 .button {
-    -fx-background-color: mediumspringgreen;
-    -fx-font: italic bold 16px "Arial";
+    -fx-background-color: #8b4513;
+    -fx-text-fill: #ffffff;
+    -fx-font: bold 14px "Georgia", serif;
+    -fx-border-color: #5d4037;
+    -fx-border-width: 1px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 8px 16px;
 }
 
 .button:hover {
-    -fx-background-color:cyan;
-    -fx-font-size: 18px;
+    -fx-background-color: #6b3a19;
+    -fx-border-color: #4a2f15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 6, 0.5, 0, 3);
 }
 
 .button:pressed {
-    -fx-background-color:orange;
-    -fx-font-size: 20px;
+    -fx-background-color: #5d4037;
+    -fx-border-color: #4a2f15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 2, 0.5, 0, 1);
 }
 
 .scroll-pane,
@@ -29,18 +51,25 @@
 }
 
 .scroll-bar {
-    -fx-font-size: 10px;  /* Change width of scroll bar. */
-    -fx-background-color: main-color;
+    -fx-font-size: 10px;
+    -fx-background-color: transparent;
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: #ff9cb4;
-    -fx-background-radius: 1em;
+    -fx-background-color: #8b4513;
+    -fx-background-radius: 4px;
+    -fx-border-color: #5d4037;
+    -fx-border-width: 1px;
 }
 
-/* Hides the increment and decrement buttons. */
 .scroll-bar .increment-button,
 .scroll-bar .decrement-button {
     -fx-pref-height: 0;
     -fx-opacity: 0;
+}
+
+/* Add subtle wood grain texture effect */
+.root {
+    -fx-background-image: linear-gradient(rgba(139, 69, 19, 0.05), rgba(139, 69, 19, 0.05)), 
+                          repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(139, 69, 19, 0.05) 2px, rgba(139, 69, 19, 0.05) 4px);
 }

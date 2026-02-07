@@ -30,10 +30,14 @@ public class MainWindow extends AnchorPane {
     /**
      * Initializes the main window.
      * Binds the scroll pane's vertical value to the dialog container's height property.
+     * Loads the CSS styles for the wood theme.
      */
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+        
+        // Load CSS styles for the wood theme
+        this.getStylesheets().add(getClass().getResource("/css/main.css").toExternalForm());
     }
 
     /**

@@ -42,6 +42,9 @@ public class DialogBox extends HBox {
 
         dialog.setText(text);
         displayPicture.setImage(img);
+        
+        // Load CSS styles for dialog boxes
+        this.getStylesheets().add(getClass().getResource("/css/dialog-box.css").toExternalForm());
     }
 
     /**
