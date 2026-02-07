@@ -1,48 +1,80 @@
 .label {
-    -fx-background-color: linear-gradient(to bottom right, #00ffbf, #00ddff);
-    /* Colours are applied clockwise */
-    -fx-border-color: #d55e00 #009e73 #cc79a7 #0072b2;
-    -fx-border-width: 2px;
-    -fx-background-radius: 1em 1em 0 1em;
-    -fx-border-radius: 1em 1em 0 1em;
-
-    background:white;
-    -fx-background-color: background;
-    -fx-text-fill: ladder(background, white 49%, black 50%);
+    -fx-background-color: #ffffff;
+    -fx-border-color: #8b4513;
+    -fx-border-width: 1px;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-padding: 12px;
+    -fx-font-family: "Georgia", serif;
+    -fx-font-size: 14px;
+    -fx-text-fill: #2c1e14;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 6, 0.5, 0, 2);
 }
 
 .reply-label {
-    -fx-background-radius: 1em 1em 1em 0;
-    -fx-border-radius: 1em 1em 1em 0;
+    -fx-background-color: #f0e6d2;
+    -fx-border-color: #8b4513;
+    -fx-background-radius: 8px 8px 8px 0;
+    -fx-border-radius: 8px 8px 8px 0;
+}
+
+.user-label {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #8b4513;
+    -fx-background-radius: 8px 8px 0 8px;
+    -fx-border-radius: 8px 8px 0 8px;
 }
 
 #displayPicture {
     /* Shadow effect on image. */
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 5, 5);
-
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 6, 0.5, 0, 3);
+    
     /* Change size of image. */
-    -fx-scale-x: 1;
-    -fx-scale-y: 1;
+    -fx-scale-x: 0.8;
+    -fx-scale-y: 0.8;
 
     /* Rotate image clockwise by degrees. */
     -fx-rotate: 0;
+    
+    /* Add border to image */
+    -fx-border-color: #8b4513;
+    -fx-border-width: 1px;
+    -fx-background-radius: 50%;
+    -fx-border-radius: 50%;
 }
 
-.reply-label {
-    -fx-background-radius: 1em 1em 1em 0;
-    -fx-border-radius: 1em 1em 1em 0;
-}
-
-/* Paste this below reply-label */
+/* Status labels with wood theme */
 .add-label {
-    -fx-background-color: yellow;
+    -fx-background-color: #e8f5e9;
+    -fx-border-color: #2e7d32;
+    -fx-text-fill: #1b5e20;
 }
 
 .marked-label {
-    -fx-background-color: palegreen;
+    -fx-background-color: #e0f2f1;
+    -fx-border-color: #00695c;
+    -fx-text-fill: #004d40;
 }
 
 .delete-label {
-    -fx-background-color: lightpink;
+    -fx-background-color: #ffebee;
+    -fx-border-color: #c62828;
+    -fx-text-fill: #b71c1c;
+}
+
+/* Hover effects for better interaction */
+.label:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0.5, 0, 3);
+    -fx-border-color: #5d4037;
+}
+
+/* Subtle animation for status labels */
+.add-label, .marked-label, .delete-label {
+    -fx-transition: all 0.3s ease;
+}
+
+.add-label:hover, .marked-label:hover, .delete-label:hover {
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
 }
 
