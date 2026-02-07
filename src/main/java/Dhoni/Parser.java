@@ -48,11 +48,14 @@ public class Parser {
             int index = Integer.parseInt(argument.trim()) - 1;
             assert index >= -1 : "Index should not be less than -1";
             if (index < 0 || index >= tasks.getSize()) {
-                return -1;
+                return "Invalid task number";
             }
-            return index;
+            tasks.getTask(index).unmark();
+            storage.saveTasks(tasks);
+           return "OK, I've marked this task as not done yet:\n\t" + tasks.getTask(index);
         } catch (NumberFormatException e) {
-            return -1;
+            return "Please provide a valid task number";
+    
         }
     }
 
@@ -80,29 +83,6 @@ public class Parser {
         } catch (NumberFormatException e) {
             return "Please provide a valid task number";
         }
-        
-        tasks.getTask(index).completed();
-        storage.saveTasks(tasks);
-        return "Nice! I've marked this task as done:\n\t" + tasks.getTask(index);
-    }
-
-    /**
-     * Handles marking a task as not completed.
-     * 
-     * @param tasks the task list containing the task to unmark
-     * @param argument the task number to unmark (1-based)
-     * @param storage the storage to save changes
-     * @return response message
-     */
-    private static String handleUnmark(TaskList tasks, String argument, Storage storage) throws Exception {
-        int index = parseTaskIndex(argument, tasks);
-        if (index == -1) {
-            return "Invalid task number";
-        }
-        
-        tasks.getTask(index).unmark();
-        storage.saveTasks(tasks);
-        return "OK, I've marked this task as not done yet:\n\t" + tasks.getTask(index);
     }
 
     /**
@@ -130,12 +110,7 @@ public class Parser {
             return "Noted. I've removed this task:\n\t" + removed + "\n\tNow you have " + tasks.getSize() + " tasks in the list.";
         } catch (NumberFormatException e) {
             return "Please provide a valid task number";
-        }
-        
-        Task removed = tasks.getTask(index);
-        tasks.deleteTask(index);
-        storage.saveTasks(tasks);
-        return "Noted. I've removed this task:\n\t" + removed + "\n\tNow you have " + tasks.getSize() + " tasks in the list.";
+        }    
     }
 
     /**
