@@ -57,31 +57,61 @@ public class Task {
      * 
      * @param line the line to parse from the file
      * @return the Task object or null if parsing fails
+     * @throws Exception if the line format is invalid
      */
-    public static Task fromFileFormat(String line) {
+    public static Task fromFileFormat(String line) throws Exception {
+        if (line == null || line.trim().isEmpty()) {
+            throw new Exception("Empty or null line cannot be parsed");
+        }
+        
         String[] parts = line.split(" \\| ");
-        if (parts.length < 2) return null;
+        if (parts.length < 2) {
+            throw new Exception("Invalid task format: insufficient parts");
+        }
         
         String type = parts[0].trim();
-        boolean isDone = parts[1].trim().equals("1");
+        String doneStatus = parts[1].trim();
+        
+        // Validate done status
+        boolean isDone;
+        if (doneStatus.equals("1")) {
+            isDone = true;
+        } else if (doneStatus.equals("0")) {
+            isDone = false;
+        } else {
+            throw new Exception("Invalid done status: " + doneStatus + ". Expected 0 or 1");
+        }
+        
+        // Validate task type
+        if (!type.matches("[X|T|D|E]")) {
+            throw new Exception("Invalid task type: " + type + ". Expected X, T, D, or E");
+        }
         
         Task task = null;
         switch (type) {
         case "X":
+            if (parts.length < 3) {
+                throw new Exception("Invalid task format: missing description");
+            }
             task = new Task(parts[2]);
             break;
         case "T":
+            if (parts.length < 3) {
+                throw new Exception("Invalid todo format: missing description");
+            }
             task = new Todo(parts[2]);
             break;
         case "D":
-            if (parts.length >= 4) {
-                task = new Deadline(parts[2], parts[3]);
+            if (parts.length < 4) {
+                throw new Exception("Invalid deadline format: missing description or date");
             }
+            task = new Deadline(parts[2], parts[3]);
             break;
         case "E":
-            if (parts.length >= 5) {
-                task = new Event(parts[2], parts[3], parts[4]);
+            if (parts.length < 5) {
+                throw new Exception("Invalid event format: missing description, start time, or end time");
             }
+            task = new Event(parts[2], parts[3], parts[4]);
             break;
         }
         

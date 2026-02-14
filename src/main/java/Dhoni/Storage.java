@@ -76,13 +76,32 @@ public class Storage {
                 return tasks;
             }
             
+            // Check if file is readable
+            if (!Files.isReadable(Paths.get(filePath))) {
+                throw new Exception("Cannot read file: " + filePath + ". Check file permissions.");
+            }
+            
             try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
                 String line;
+                int lineNumber = 0;
                 while ((line = reader.readLine()) != null) {
-                    Task task = Task.fromFileFormat(line);
-                    assert task != null : "Parsed task should not be null for line: " + line;
-                    if (task != null) {
-                        tasks.add(task);
+                    lineNumber++;
+                    // Skip empty lines
+                    if (line.trim().isEmpty()) {
+                        continue;
+                    }
+                    
+                    try {
+                        Task task = Task.fromFileFormat(line);
+                        if (task != null) {
+                            tasks.add(task);
+                        } else {
+                            System.err.println("Warning: Failed to parse task on line " + lineNumber + ": " + line);
+                        }
+                    } catch (Exception e) {
+                        System.err.println("Warning: Invalid task format on line " + lineNumber + ": " + line);
+                        System.err.println("Error: " + e.getMessage());
+                        // Continue processing other lines instead of failing completely
                     }
                 }
             }
