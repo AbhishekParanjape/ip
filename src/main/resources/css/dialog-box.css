@@ -1,28 +1,28 @@
 .label {
-    -fx-background-color: #ffffff;
-    -fx-border-color: #8b4513;
+    -fx-background-color: #262626;
+    -fx-border-color: transparent;
     -fx-border-width: 1px;
-    -fx-background-radius: 8px;
-    -fx-border-radius: 8px;
-    -fx-padding: 12px;
-    -fx-font-family: "Georgia", serif;
+    -fx-background-radius: 18px;
+    -fx-border-radius: 18px;
+    -fx-padding: 10px 14px;
+    -fx-font-family: "Inter", "San Francisco", "Roboto", "Segoe UI", sans-serif;
     -fx-font-size: 14px;
-    -fx-text-fill: #2c1e14;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 6, 0.5, 0, 2);
+    -fx-text-fill: #e0e0e0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 6, 0.5, 0, 2);
 }
 
 .reply-label {
-    -fx-background-color: #f0e6d2;
-    -fx-border-color: #8b4513;
-    -fx-background-radius: 8px 8px 8px 0;
-    -fx-border-radius: 8px 8px 8px 0;
+    -fx-background-color: #262626;
+    -fx-border-color: transparent;
+    -fx-background-radius: 18px 18px 18px 0;
+    -fx-border-radius: 18px 18px 18px 0;
 }
 
 .user-label {
-    -fx-background-color: #ffffff;
-    -fx-border-color: #8b4513;
-    -fx-background-radius: 8px 8px 0 8px;
-    -fx-border-radius: 8px 8px 0 8px;
+    -fx-background-color: #0a84ff;
+    -fx-border-color: transparent;
+    -fx-background-radius: 18px 18px 0 18px;
+    -fx-border-radius: 18px 18px 0 18px;
 }
 
 #displayPicture {
@@ -37,35 +37,34 @@
     -fx-rotate: 0;
     
     /* Add border to image */
-    -fx-border-color: #8b4513;
+    -fx-border-color: transparent;
     -fx-border-width: 1px;
     -fx-background-radius: 50%;
     -fx-border-radius: 50%;
 }
 
-/* Status labels with wood theme */
+/* Status labels with modern theme */
 .add-label {
-    -fx-background-color: #e8f5e9;
-    -fx-border-color: #2e7d32;
-    -fx-text-fill: #1b5e20;
+    -fx-background-color: #262626;
+    -fx-border-color: transparent;
+    -fx-text-fill: #e0e0e0;
 }
 
 .marked-label {
-    -fx-background-color: #e0f2f1;
-    -fx-border-color: #00695c;
-    -fx-text-fill: #004d40;
+    -fx-background-color: #262626;
+    -fx-border-color: transparent;
+    -fx-text-fill: #e0e0e0;
 }
 
 .delete-label {
-    -fx-background-color: #ffebee;
-    -fx-border-color: #c62828;
-    -fx-text-fill: #b71c1c;
+    -fx-background-color: #262626;
+    -fx-border-color: transparent;
+    -fx-text-fill: #e0e0e0;
 }
 
 /* Hover effects for better interaction */
 .label:hover {
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0.5, 0, 3);
-    -fx-border-color: #5d4037;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0.5, 0, 3);
 }
 
 /* Subtle animation for status labels */
