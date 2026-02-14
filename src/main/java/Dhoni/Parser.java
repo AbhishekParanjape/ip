@@ -113,7 +113,7 @@ public class Parser {
             }
             tasks.getTask(index).completed();
             storage.saveTasks(tasks);
-            return "Nice! I've marked this task as done:\n\t" + tasks.getTask(index);
+            return "Excellent! I've marked this task as done:\n\t" + tasks.getTask(index) + "\n\tThat's a six for productivity!";
         } catch (NumberFormatException e) {
             return "Please provide a valid task number (e.g., 'mark 1')";
         }
@@ -149,7 +149,7 @@ public class Parser {
             assert removed != null : "Removed task should not be null";
             tasks.deleteTask(index);
             storage.saveTasks(tasks);
-            return "Noted. I've removed this task:\n\t" + removed + "\n\tNow you have " + tasks.getSize() + " tasks in the list.";
+            return "Noted. I've removed this task:\n\t" + removed + "\n\tNow you have " + tasks.getSize() + " tasks in the list.\n\tOut for a duck, but we'll get the next one!";
         } catch (NumberFormatException e) {
             return "Please provide a valid task number (e.g., 'delete 1')";
         }    
@@ -205,7 +205,7 @@ public class Parser {
         assert todo != null : "Created todo should not be null";
         tasks.addTask(todo);
         storage.saveTasks(tasks);
-        return "Got it. I've added this task:\n\t" + todo + "\n\tNow you have " + tasks.getSize() + " tasks in the list.";
+        return "Got it. I've added this task:\n\t" + todo + "\n\tNow you have " + tasks.getSize() + " tasks in the list.\n\tAnother run on the board!";
     }
 
     /**
@@ -261,7 +261,7 @@ public class Parser {
         assert deadline != null : "Created deadline should not be null";
         tasks.addTask(deadline);
         storage.saveTasks(tasks);
-        return "Got it. I've added this task:\n\t" + deadline + "\n\tNow you have " + tasks.getSize() + " tasks in the list.";
+        return "Got it. I've added this task:\n\t" + deadline + "\n\tNow you have " + tasks.getSize() + " tasks in the list.\n\tDeadline set - time to finish strong!";
     }
 
     /**
@@ -337,7 +337,7 @@ public class Parser {
         assert event != null : "Created event should not be null";
         tasks.addTask(event);
         storage.saveTasks(tasks);
-        return "Got it. I've added this task:\n\t" + event + "\n\tNow you have " + tasks.getSize() + " tasks in the list.";
+        return "Got it. I've added this task:\n\t" + event + "\n\tNow you have " + tasks.getSize() + " tasks in the list.\n\tEvent scheduled - let's make it count!";
     }
     
     private static String handleFind(TaskList tasks, String argument) throws Exception {

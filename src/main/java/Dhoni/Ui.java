@@ -14,7 +14,9 @@ public class Ui {
     public static void hello() {
         System.out.println("\t" + LINE);
         System.out.println("\t" + "Hello! I'm " + NAME);
-        System.out.println("\t" + "What can I do for you? I'm a cricket team captain that loves crushing t20s and tasks");
+        System.out.println("\t" + "Welcome to the Dhoni Task Manager!");
+        System.out.println("\t" + "I love crushing T20s and tasks - let's get this innings started!");
+        System.out.println("\t" + "What can I do for you today?");
         System.out.println("\t" + LINE);
     }
 
