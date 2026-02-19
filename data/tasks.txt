@@ -1,5 +1,5 @@
-T | 1 | read book
-D | 0 | return book | 2024-06-06
 E | 0 | project meeting | 2024-08-06 | 2024-08-08
 T | 1 | join sports club
-T | 0 | smth
+T | 0 | read book
+D | 0 | return book | 2019-12-02
+E | 0 | team meeting | 2023-09-21 | 2023-09-22
