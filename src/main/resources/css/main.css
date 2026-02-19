@@ -1,8 +1,8 @@
 .root {
-    main-color: #f5f5dc;       /* Beige wood-like background */
-    accent-color: #8b4513;     /* Saddle brown for accents */
-    text-color: #2c1e14;       /* Dark brown for text */
-    -fx-background-color: main-color;
+    -fx-background-image: url('images/bg.jpg');
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
     -fx-font-family: "Georgia", serif;
 }
 
@@ -68,8 +68,8 @@
     -fx-opacity: 0;
 }
 
-/* Add subtle wood grain texture effect */
-.root {
-    -fx-background-image: linear-gradient(rgba(139, 69, 19, 0.05), rgba(139, 69, 19, 0.05)), 
-                          repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(139, 69, 19, 0.05) 2px, rgba(139, 69, 19, 0.05) 4px);
+/* Ensure dialog container is transparent to show cricket pitch background */
+#dialogContainer {
+    -fx-background-color: transparent;
 }
+

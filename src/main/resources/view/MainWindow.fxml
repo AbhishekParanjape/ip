@@ -12,7 +12,7 @@
             styleClass="root"
             xmlns="http://javafx.com/javafx/17"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="Dhoni.MainWindow">
+            fx:controller="Dhoni.ui.MainWindow">
     <children>
         <TextField fx:id="userInput"
                    layoutY="558.0"
@@ -31,13 +31,17 @@
                 prefWidth="76.0"
                 styleClass="button"
                 text="Send" />
-        <ScrollPane fx:id="scrollPane"
-                    hbarPolicy="NEVER"
-                    hvalue="1.0"
-                    prefHeight="557.0"
-                    prefWidth="400.0"
-                    vvalue="1.0"
-                    styleClass="scroll-pane">
+        <ScrollPane fx:id="scrollPane" 
+                    fitToWidth="true" 
+                    hbarPolicy="NEVER" 
+                    hvalue="1.0" 
+                    prefHeight="557.0" 
+                    prefWidth="400.0" 
+                    vvalue="1.0" 
+                    AnchorPane.bottomAnchor="43.0" 
+                    AnchorPane.leftAnchor="0.0" 
+                    AnchorPane.rightAnchor="0.0" 
+                    AnchorPane.topAnchor="0.0" >
             <content>
                 <VBox fx:id="dialogContainer"
                       prefHeight="552.0"
