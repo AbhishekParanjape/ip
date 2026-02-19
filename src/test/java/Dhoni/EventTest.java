@@ -2,6 +2,8 @@ package Dhoni;
 
 import org.junit.jupiter.api.Test;
 
+import Dhoni.tasks.Event;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.DisplayName;
@@ -41,7 +43,7 @@ public class EventTest {
     void eventMarkedAsCompleted() {
         Event event = new Event("workshop", "2024-09-01", "2024-09-02");
         event.completed();
-        assertTrue(event.isDone, "Event should be marked as done");
+        assertTrue(event.isDone(), "Event should be marked as done");
         assertTrue(event.toString().contains("[X]"), "Completed event should show [X]");
     }
 }

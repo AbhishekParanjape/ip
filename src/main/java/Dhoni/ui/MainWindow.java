@@ -1,5 +1,6 @@
-package Dhoni;
+package Dhoni.ui;
 
+import Dhoni.Dhoni;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;

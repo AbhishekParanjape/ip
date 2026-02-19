@@ -1,4 +1,4 @@
-package Dhoni;
+package Dhoni.tasks;
 
 /**
  * Represents a todo task with a description.

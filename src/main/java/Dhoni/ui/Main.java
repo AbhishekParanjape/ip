@@ -1,7 +1,8 @@
-package Dhoni;
+package Dhoni.ui;
 
 import java.io.IOException;
 
+import Dhoni.Dhoni;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

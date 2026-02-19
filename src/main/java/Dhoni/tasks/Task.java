@@ -1,4 +1,4 @@
-package Dhoni;
+package Dhoni.tasks;
 
 /**
  * Represents a general task with a description and completion status.
@@ -24,6 +24,14 @@ public class Task {
      */
     public void completed() {
         this.isDone = true;
+    }
+
+    public boolean isDone() {
+        return this.isDone;
+    }
+
+    public String description() {
+        return this.description;
     }
 
     /**

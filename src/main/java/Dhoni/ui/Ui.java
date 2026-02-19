@@ -1,4 +1,4 @@
-package Dhoni;
+package Dhoni.ui;
 
 /**
  * Ui class handles user interface operations.

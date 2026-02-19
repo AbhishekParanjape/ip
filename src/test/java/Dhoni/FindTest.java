@@ -2,6 +2,13 @@ package Dhoni;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import Dhoni.tasks.Deadline;
+import Dhoni.tasks.Event;
+import Dhoni.tasks.Task;
+import Dhoni.tasks.TaskList;
+import Dhoni.tasks.Todo;
+
 import org.junit.jupiter.api.DisplayName;
 import static org.junit.jupiter.api.Assertions.*;
 

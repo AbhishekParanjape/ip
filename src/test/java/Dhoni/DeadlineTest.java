@@ -2,6 +2,8 @@ package Dhoni;
 
 import org.junit.jupiter.api.Test;
 
+import Dhoni.tasks.Deadline;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.DisplayName;

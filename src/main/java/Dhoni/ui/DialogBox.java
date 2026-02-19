@@ -1,4 +1,4 @@
-package Dhoni;
+package Dhoni.ui;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
