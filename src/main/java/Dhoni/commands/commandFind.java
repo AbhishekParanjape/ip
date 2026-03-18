@@ -7,16 +7,27 @@ import java.util.List;
 import Dhoni.tasks.Task;
 import Dhoni.tasks.TaskList;
 
-public class commandFind {
+/**
+ * Handles the "find" command to search for tasks by keyword or date.
+ */
+public class CommandFind {
+    /**
+     * Handles finding tasks by keyword or date.
+     *
+     * @param tasks the task list to search in
+     * @param argument the search term (keyword or date)
+     * @return response message with found tasks
+     * @throws Exception if there's an error during search
+     */
     public static String handle(TaskList tasks, String argument) throws Exception {
         assert tasks != null : "Task list should not be null";
         assert argument != null : "Argument should not be null";
-        
+
         String trimmedArg = argument.trim();
         if (trimmedArg.isEmpty()) {
             return "Usage: find <keyword or yyyy-MM-dd>/<additional keywords or dates>";
         }
-        
+
         // Try to parse as date first
         String[] arg = trimmedArg.split("/");
         try {
@@ -26,7 +37,7 @@ public class commandFind {
                     throw new Exception("Invalid date format: " + dateStr + ". Expected yyyy-MM-dd");
                 }
             }
-            
+
             return handleFindByDate(tasks, arg[0].trim().lines()
                     .map(dateStr -> LocalDate.parse(dateStr.trim(), DateTimeFormatter.ISO_LOCAL_DATE))
                     .toArray(LocalDate[]::new));
@@ -36,10 +47,18 @@ public class commandFind {
         }
     }
 
+    /**
+     * Handles finding tasks by date.
+     *
+     * @param tasks the task list to search in
+     * @param targetDates the dates to search for
+     * @return response message with found tasks
+     * @throws Exception if there's an error during search
+     */
     private static String handleFindByDate(TaskList tasks, LocalDate... targetDates) throws Exception {
         StringBuilder sb = new StringBuilder("Tasks on:");
         List<Task> foundTasks = tasks.findByDate(targetDates);
-        
+
         if (foundTasks.isEmpty()) {
             sb.append("\n\tNo tasks found on this date.");
         } else {
@@ -54,13 +73,16 @@ public class commandFind {
     }
 
     /**
-     * Finds tasks by keyword in description (case-insensitive)
-     * @param keyword the search keyword
-     * @return list of tasks matching the keyword
+     * Finds tasks by keyword in description (case-insensitive).
+     *
+     * @param tasks the task list to search in
+     * @param keywords the search keywords
+     * @return response message with found tasks
+     * @throws Exception if there's an error during search
      */
     private static String handleFindByKeyword(TaskList tasks, String... keywords) throws Exception {
         List<Task> foundTasks = tasks.findByKeyword(keywords);
-        
+
         if (foundTasks.isEmpty()) {
             return ("No tasks found matching keyword. ");
         } else {
