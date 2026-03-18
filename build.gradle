@@ -48,11 +48,11 @@ test {
 }
 
 application {
-    mainClass.set("Dhoni.Launcher")
+    mainClass.set("dhoni.Launcher")
 }
 
 shadowJar {
-    archiveBaseName = "Dhoni"
+    archiveBaseName = "dhoni"
     archiveClassifier = null
 }
 

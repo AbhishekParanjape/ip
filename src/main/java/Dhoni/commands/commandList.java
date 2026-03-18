@@ -1,6 +1,6 @@
-package Dhoni.commands;
+package dhoni.commands;
 
-import Dhoni.tasks.TaskList;
+import dhoni.tasks.TaskList;
 
 /**
  * Handles displaying the list of tasks to the user.

@@ -1,4 +1,7 @@
-package Dhoni.ui;
+package dhoni.ui;
+
+import java.io.IOException;
+import java.util.Collections;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,9 +13,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-
-import java.io.IOException;
-import java.util.Collections;
 
 /**
  * DialogBox represents a chat bubble in the GUI.
@@ -26,7 +26,7 @@ public class DialogBox extends HBox {
 
     /**
      * Constructs a DialogBox with the given text and image.
-     * 
+     *
      * @param text the text to display in the dialog
      * @param img the image to display as the speaker's avatar
      */
@@ -42,7 +42,7 @@ public class DialogBox extends HBox {
 
         dialog.setText(text);
         displayPicture.setImage(img);
-        
+
         // Load CSS styles for dialog boxes
         this.getStylesheets().add(getClass().getResource("/css/dialog-box.css").toExternalForm());
     }
@@ -61,7 +61,7 @@ public class DialogBox extends HBox {
 
     /**
      * Creates a user dialog box.
-     * 
+     *
      * @param text the text to display
      * @param img the user's avatar image
      * @return a new DialogBox for user messages
@@ -73,7 +73,7 @@ public class DialogBox extends HBox {
     /**
      * Creates a Dhoni (bot) dialog box.
      * The dialog is flipped to distinguish it from user messages.
-     * 
+     *
      * @param text the text to display
      * @param img the bot's avatar image
      * @return a new DialogBox for bot messages

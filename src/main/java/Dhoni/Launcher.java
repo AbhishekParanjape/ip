@@ -1,6 +1,6 @@
-package Dhoni;
+package dhoni;
 
-import Dhoni.ui.Main;
+import dhoni.ui.Main;
 import javafx.application.Application;
 
 /**

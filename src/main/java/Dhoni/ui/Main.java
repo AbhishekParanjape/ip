@@ -1,8 +1,8 @@
-package Dhoni.ui;
+package dhoni.ui;
 
 import java.io.IOException;
 
-import Dhoni.Dhoni;
+import dhoni.Dhoni;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -26,7 +26,7 @@ public class Main extends Application {
 
     /**
      * Constructs a Main object with the specified file path.
-     * 
+     *
      * @param filePath the path to the file where tasks will be stored
      */
     public Main(String filePath) {
@@ -36,7 +36,7 @@ public class Main extends Application {
     /**
      * Starts the JavaFX application.
      * Sets up the main window and initializes the application.
-     * 
+     *
      * @param stage the primary stage for the application
      */
     @Override
@@ -48,7 +48,9 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
-            fxmlLoader.<MainWindow>getController().setDhoni(dhoni);
+            MainWindow mainWindow = fxmlLoader.<MainWindow>getController();
+            mainWindow.setDhoni(dhoni);
+            mainWindow.showWelcomeMessage();
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

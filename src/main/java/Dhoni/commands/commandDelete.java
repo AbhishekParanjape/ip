@@ -1,8 +1,8 @@
-package Dhoni.commands;
+package dhoni.commands;
 
-import Dhoni.Storage;
-import Dhoni.tasks.Task;
-import Dhoni.tasks.TaskList;
+import dhoni.Storage;
+import dhoni.tasks.Task;
+import dhoni.tasks.TaskList;
 
 /**
  * Handles deletion of a task from the task list.

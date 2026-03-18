@@ -1,4 +1,4 @@
-package Dhoni.tasks;
+package dhoni.tasks;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -10,26 +10,26 @@ import java.util.List;
  */
 public class TaskList {
     private List<Task> tasks;
-    
+
     /**
      * Constructs an empty TaskList.
      */
     public TaskList() {
         this.tasks = new ArrayList<>();
     }
-    
+
     /**
      * Constructs a TaskList with the given list of tasks.
-     * 
+     *
      * @param tasks the initial list of tasks
      */
     public TaskList(List<Task> tasks) {
         this.tasks = tasks;
     }
-    
+
     /**
      * Adds a task to the task list.
-     * 
+     *
      * @param task the task to add
      */
     public void addTask(Task task) {
@@ -38,16 +38,16 @@ public class TaskList {
 
     /**
      * Checks if the task list is empty.
-     * 
+     *
      * @return true if the task list is empty, false otherwise
      */
     public boolean isEmpty() {
         return tasks.isEmpty();
     }
-    
+
     /**
      * Deletes the task at the specified index.
-     * 
+     *
      * @param index the index of the task to delete (0-based)
      * @throws Exception if the index is invalid
      */
@@ -59,10 +59,10 @@ public class TaskList {
         }
         tasks.remove(index);
     }
-    
+
     /**
      * Marks the task at the specified index as done.
-     * 
+     *
      * @param index the index of the task to mark (0-based)
      * @throws Exception if the index is invalid
      */
@@ -74,10 +74,10 @@ public class TaskList {
         }
         tasks.get(index).completed();
     }
-    
+
     /**
      * Unmarks the task at the specified index as not done.
-     * 
+     *
      * @param index the index of the task to unmark (0-based)
      * @throws Exception if the index is invalid
      */
@@ -89,28 +89,28 @@ public class TaskList {
         }
         tasks.get(index).unmark();
     }
-    
+
     /**
      * Gets the list of all tasks.
-     * 
+     *
      * @return the list of tasks
      */
     public List<Task> getTasks() {
         return tasks;
     }
-    
+
     /**
      * Gets the number of tasks in the list.
-     * 
+     *
      * @return the size of the task list
      */
     public int getSize() {
         return tasks.size();
     }
-    
+
     /**
      * Gets the task at the specified index.
-     * 
+     *
      * @param index the index of the task to retrieve (0-based)
      * @return the task at the specified index
      * @throws Exception if the index is invalid
@@ -123,12 +123,12 @@ public class TaskList {
         }
         return tasks.get(index);
     }
-    
+
     /**
      * Finds tasks by date.
      * For Deadline tasks, matches the due date.
      * For Event tasks, matches if the date falls within the event's from-to range.
-     * 
+     *
      * @param targetDates the dates to search for
      * @return list of tasks matching the specified dates
      */
@@ -150,10 +150,10 @@ public class TaskList {
         }
         return result;
     }
-    
+
     /**
      * Finds tasks by keyword in description (case-insensitive).
-     * 
+     *
      * @param keywords the search keywords
      * @return list of tasks matching any of the keywords
      */

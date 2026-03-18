@@ -1,19 +1,19 @@
-package Dhoni;
+package dhoni;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import Dhoni.tasks.Deadline;
-import Dhoni.tasks.Event;
-import Dhoni.tasks.Task;
-import Dhoni.tasks.TaskList;
-import Dhoni.tasks.Todo;
-
-import org.junit.jupiter.api.DisplayName;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import dhoni.tasks.Deadline;
+import dhoni.tasks.Event;
+import dhoni.tasks.Task;
+import dhoni.tasks.TaskList;
+import dhoni.tasks.Todo;
 
 public class FindTest {
     private TaskList taskList;

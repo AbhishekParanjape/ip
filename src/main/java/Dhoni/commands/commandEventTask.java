@@ -1,12 +1,12 @@
-package Dhoni.commands;
+package dhoni.commands;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import Dhoni.Storage;
-import Dhoni.tasks.Event;
-import Dhoni.tasks.Task;
-import Dhoni.tasks.TaskList;
+import dhoni.Storage;
+import dhoni.tasks.Event;
+import dhoni.tasks.Task;
+import dhoni.tasks.TaskList;
 
 /**
  * Handles the "event" command to add a new Event task to the task list.

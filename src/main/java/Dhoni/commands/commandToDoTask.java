@@ -1,9 +1,9 @@
-package Dhoni.commands;
+package dhoni.commands;
 
-import Dhoni.Storage;
-import Dhoni.tasks.Task;
-import Dhoni.tasks.TaskList;
-import Dhoni.tasks.Todo;
+import dhoni.Storage;
+import dhoni.tasks.Task;
+import dhoni.tasks.TaskList;
+import dhoni.tasks.Todo;
 
 /**
  * Handles the "todo" command to add a new Todo task to the task list.

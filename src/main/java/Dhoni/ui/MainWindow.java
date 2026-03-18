@@ -1,6 +1,6 @@
-package Dhoni.ui;
+package dhoni.ui;
 
-import Dhoni.Dhoni;
+import dhoni.Dhoni;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -36,14 +36,27 @@ public class MainWindow extends AnchorPane {
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
-        
+
         // Load CSS styles for the wood theme
         this.getStylesheets().add(getClass().getResource("/css/main.css").toExternalForm());
     }
 
     /**
+     * Displays the welcome message in the GUI.
+     * This method is called after the Dhoni instance is set.
+     */
+    public void showWelcomeMessage() {
+        if (dhoni != null) {
+            String welcomeMessage = dhoni.getWelcomeMessage();
+            dialogContainer.getChildren().add(
+                DialogBox.getDhoniDialog(welcomeMessage, dhoniImage)
+            );
+        }
+    }
+
+    /**
      * Injects the Dhoni instance into this controller.
-     * 
+     *
      * @param d the Dhoni application instance
      */
     public void setDhoni(Dhoni d) {
@@ -53,13 +66,22 @@ public class MainWindow extends AnchorPane {
     /**
      * Handles user input from the text field.
      * Creates dialog boxes for both user input and Dhoni's response, then clears the input field.
-     * 
+     * Handles 'bye' command to terminate the application.
+     *
      * @throws Exception if there's an error processing the user input
      */
     @FXML
     private void handleUserInput() throws Exception {
         String input = userInput.getText();
         String response = dhoni.getResponse(input);
+
+        // Check if the response indicates termination (bye command)
+        if (response != null && response.equals("Bye. Hope to see you again soon!")) {
+            // Terminate the application
+            javafx.application.Platform.exit();
+            return;
+        }
+
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getDhoniDialog(response, dhoniImage)

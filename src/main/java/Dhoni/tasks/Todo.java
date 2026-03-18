@@ -1,4 +1,4 @@
-package Dhoni.tasks;
+package dhoni.tasks;
 
 /**
  * Represents a todo task with a description.
@@ -7,7 +7,7 @@ package Dhoni.tasks;
 public class Todo extends Task {
     /**
      * Constructs a Todo task with the given description.
-     * 
+     *
      * @param description the description of the todo task
      */
     public Todo(String description) {
@@ -16,7 +16,7 @@ public class Todo extends Task {
 
     /**
      * Converts the todo task to a file format string for saving.
-     * 
+     *
      * @return string representation for file storage
      */
     @Override
@@ -26,7 +26,7 @@ public class Todo extends Task {
 
     /**
      * Returns the string representation of the todo task.
-     * 
+     *
      * @return formatted string showing task status and description
      */
     @Override

@@ -1,14 +1,13 @@
-package Dhoni;
-
-import org.junit.jupiter.api.Test;
-
-import Dhoni.tasks.Event;
+package dhoni;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import dhoni.tasks.Event;
 
 public class EventTest {
     @Test
@@ -24,7 +23,7 @@ public class EventTest {
     @DisplayName("check event date format parsing")
     void checkEventDateFormat() {
         Event event = new Event("project meeting", "2024-08-06", "2024-08-08");
-        assertEquals("[E][ ] project meeting (from: Aug 06 2024 to: Aug 08 2024)", 
+        assertEquals("[E][ ] project meeting (from: Aug 06 2024 to: Aug 08 2024)",
                 event.toString(),
                 "Expected formatted event with correct dates");
     }
@@ -33,7 +32,7 @@ public class EventTest {
     @DisplayName("event toFileFormat() returns correct format")
     void checkEventFileFormat() {
         Event event = new Event("team lunch", "2024-08-10", "2024-08-12");
-        assertEquals("E | 0 | team lunch | 2024-08-10 | 2024-08-12", 
+        assertEquals("E | 0 | team lunch | 2024-08-10 | 2024-08-12",
                 event.toFileFormat(),
                 "Expected file format string");
     }

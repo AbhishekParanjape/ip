@@ -1,14 +1,13 @@
-package Dhoni;
-
-import org.junit.jupiter.api.Test;
-
-import Dhoni.tasks.Deadline;
+package dhoni;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import dhoni.tasks.Deadline;
 
 public class DeadlineTest {
     @Test

@@ -1,4 +1,4 @@
-package Dhoni.tasks;
+package dhoni.tasks;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -8,14 +8,14 @@ import java.time.format.DateTimeFormatter;
  * This class extends Task and adds a due date functionality.
  */
 public class Deadline extends Task {
-    private LocalDate dueDay;
     private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy");
-    
+    private LocalDate dueDay;
+
 
     /**
      * Constructs a Deadline task with the given description and due date.
-     * 
+     *
      * @param description the description of the deadline task
      * @param dueDay the due date in yyyy-MM-dd format
      */
@@ -26,7 +26,7 @@ public class Deadline extends Task {
 
     /**
      * Gets the due date of the deadline task.
-     * 
+     *
      * @return the due date as a LocalDate object
      */
     public LocalDate getDueDay() {
@@ -35,7 +35,7 @@ public class Deadline extends Task {
 
     /**
      * Converts the deadline task to a file format string for saving.
-     * 
+     *
      * @return string representation for file storage including due date
      */
     @Override
@@ -45,7 +45,7 @@ public class Deadline extends Task {
 
     /**
      * Returns the string representation of the deadline task.
-     * 
+     *
      * @return formatted string showing task status, description, and due date
      */
     @Override

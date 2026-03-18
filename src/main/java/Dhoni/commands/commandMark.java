@@ -1,7 +1,7 @@
-package Dhoni.commands;
+package dhoni.commands;
 
-import Dhoni.Storage;
-import Dhoni.tasks.TaskList;
+import dhoni.Storage;
+import dhoni.tasks.TaskList;
 
 /**
  * Handles marking a task as completed.

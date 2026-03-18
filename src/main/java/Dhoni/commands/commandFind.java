@@ -1,11 +1,11 @@
-package Dhoni.commands;
+package dhoni.commands;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import Dhoni.tasks.Task;
-import Dhoni.tasks.TaskList;
+import dhoni.tasks.Task;
+import dhoni.tasks.TaskList;
 
 /**
  * Handles the "find" command to search for tasks by keyword or date.
