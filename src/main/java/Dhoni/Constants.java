@@ -1,4 +1,4 @@
-package Dhoni;
+package dhoni;
 
 /**
  * Constants class containing all magic literals used throughout the application.
