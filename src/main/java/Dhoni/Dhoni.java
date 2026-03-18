@@ -36,7 +36,7 @@ public class Dhoni {
      * Main method for command-line interface.
      * Starts the CLI version of the application.
      *
-     * @param args command line arguments (not used)
+     * @param args Array of command line arguments (not used)
      * @throws Exception if there's an error during execution
      */
     public static void main(String[] args) {

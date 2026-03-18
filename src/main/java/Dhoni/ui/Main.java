@@ -14,7 +14,7 @@ import javafx.stage.Stage;
  * This class extends JavaFX Application and sets up the GUI interface.
  */
 public class Main extends Application {
-    private static final String DEFAULT_FILE_PATH = "Dhoni";
+    private static final String DEFAULT_FILE_PATH = "dhoni";
     private Dhoni dhoni;
 
     /**

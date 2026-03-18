@@ -12,7 +12,7 @@
             styleClass="root"
             xmlns="http://javafx.com/javafx/17"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="Dhoni.ui.MainWindow">
+            fx:controller="dhoni.ui.MainWindow">
     <children>
         <TextField fx:id="userInput"
                    layoutY="558.0"

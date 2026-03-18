@@ -64,4 +64,28 @@ public class Constants {
         + "\n\tNow you have %d tasks in the list.";
     public static final String MSG_DEADLINE_ADDED = "Got it. I've added this task:\n\t%s"
         + "\n\tNow you have %d tasks in the list.\n\tDeadline set - time to finish strong!";
+    // Event task constants
+    public static final String ERROR_EVENT_FORMAT = "Event format: event <description> /from <time> /to <time>. "
+        + "Missing '/from' parameter.";
+    public static final String ERROR_EVENT_MULTIPLE_FROM = "Event format: event <description> /from <time> /to <time>. "
+        + "Multiple '/from' parameters detected.";
+    public static final String ERROR_EVENT_FORMAT_TO = "Event format: event <description> /from <time> /to <time>. "
+        + "Missing '/to' parameter.";
+    public static final String ERROR_EVENT_MULTIPLE_TO = "Event format: event <description> /from <time> /to <time>. "
+        + "Multiple '/to' parameters detected.";
+    public static final String ERROR_EVENT_EMPTY_DESC = "Event description cannot be empty. "
+        + "Usage: event <description> /from <time> /to <time>";
+    public static final String ERROR_EVENT_EMPTY_FROM = "Event start time cannot be empty. "
+        + "Usage: event <description> /from <time> /to <time>";
+    public static final String ERROR_EVENT_EMPTY_TO = "Event end time cannot be empty. "
+        + "Usage: event <description> /from <time> /to <time>";
+    public static final String ERROR_EVENT_INVALID_DATE = "Invalid date format. Expected yyyy-MM-dd format "
+        + "(e.g., 2023-12-25)";
+    public static final String ERROR_EVENT_PAST_DATE = "Cannot set event to a past date. Please use a future date.";
+    public static final String ERROR_EVENT_DATE_RANGE = "Invalid date range: start date cannot be after end date";
+    public static final String ERROR_EVENT_SAME_DATE = "Invalid date range: start and end dates cannot be the same";
+    public static final String ERROR_EVENT_DUPLICATE = "Duplicate event detected: '%s' from '%s' to '%s'. "
+        + "Task already exists.";
+    public static final String MSG_EVENT_ADDED = "Got it. I've added this task:\n\t%s"
+        + "\n\tNow you have %d tasks in the list.\n\tEvent scheduled - let's make it count!";
 }
